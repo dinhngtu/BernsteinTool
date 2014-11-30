@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace RelationLibrary {
-    class Attribute {
+    public class Attribute {
         public string Name { get; set; }
 
         public Attribute(string name) {
             this.Name = name;
+        }
+
+        public FunctionalDependency DependsOn(params Attribute[] determinants) {
+            return new FunctionalDependency(new HashSet<Attribute>(determinants), this);
         }
     }
 }
