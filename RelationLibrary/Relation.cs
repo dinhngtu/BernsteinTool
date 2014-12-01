@@ -25,7 +25,7 @@ namespace RelationLibrary {
                 foreach (var fd in testfds) {
                     if (fd.Determinants.IsSubsetOf(ret)) {
                         found = true;
-                        ret.UnionWith(fd.Determinants);
+                        ret.Add(fd.Dependent);
                         fdToRemove.Add(fd);
                         break;
                     }
