@@ -11,5 +11,9 @@ namespace RelationLibrary {
             ret.Remove(value);
             return ret;
         }
+
+        public static HashSet<T> CreateSet<T>(params T[] items) {
+            return new HashSet<T>(items);
+        }
     }
 }
