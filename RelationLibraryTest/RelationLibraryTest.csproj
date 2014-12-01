@@ -52,6 +52,12 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RelationLibrary\RelationLibrary.csproj">
+      <Project>{9e0a86b6-c366-408b-8dc5-c7eb6eec3004}</Project>
+      <Name>RelationLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
