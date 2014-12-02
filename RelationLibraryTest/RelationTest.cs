@@ -55,7 +55,29 @@ namespace RelationLibraryTest {
             fds.Add(B.DependsOn(D));
             fds.Add(F.DependsOn(A, B, E));
             var minimal_rel = new Relation(attributes, fds);
-            Assert.IsTrue(minimal_rel.RelationEquals(rel));
+            Assert.IsTrue(fds.SetEquals(rel.GetMinimalCovering()));
+        }
+
+        [TestMethod]
+        public void EqualTest() {
+            Assert.AreEqual(new RelationLibrary.Attribute("A"), new RelationLibrary.Attribute("A"));
+            Assert.AreEqual(B.DependsOn(C, D), B.DependsOn(C, D));
+            Assert.AreEqual(B.DependsOn(C, D).GetHashCode(), B.DependsOn(C, D).GetHashCode());
+            Assert.AreEqual(B.DependsOn(C, D), B.DependsOn(D, C));
+            Assert.IsTrue(Utilities.CreateSet(A, B, C).SetEquals(Utilities.CreateSet(B, A, C)));
+        }
+
+        [TestMethod]
+        public void CreateRelationsTest() {
+            var eliminated = rel.FDs.Select(fd => rel.EliminateExtraneousAttributes(fd));
+            rel.FDs = new HashSet<FunctionalDependency>(eliminated);
+            rel.FDs = rel.GetMinimalCovering();
+            var finalResult = rel.CreateRelations();
+            Assert.IsTrue(finalResult.SetEquals(Utilities.CreateSet(
+                new Relation(Utilities.CreateSet(A, B), B.DependsOn(A)),
+                new Relation(Utilities.CreateSet(B, D, C), C.DependsOn(B, D)),
+                new Relation(Utilities.CreateSet(A, E, F), F.DependsOn(A, E))
+                )));
         }
     }
 }
