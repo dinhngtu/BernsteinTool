@@ -15,6 +15,11 @@ namespace RelationLibrary {
             this.FDs = fds;
         }
 
+        public Relation(HashSet<Attribute> attrs, params FunctionalDependency[] fds) {
+            this.Attributes = attrs;
+            this.FDs = new HashSet<FunctionalDependency>(fds);
+        }
+
         public HashSet<Attribute> GetClosure(HashSet<Attribute> determinants) {
             var ret = new HashSet<Attribute>(determinants);
             var testfds = new HashSet<FunctionalDependency>(FDs);
