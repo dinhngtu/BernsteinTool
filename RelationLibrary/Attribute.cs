@@ -39,5 +39,9 @@ namespace RelationLibrary {
         public static bool operator !=(Attribute a, Attribute b) {
             return !a.Equals(b);
         }
+
+        public string ToString() {
+            return this.Name;
+        }
     }
 }

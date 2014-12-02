@@ -48,5 +48,9 @@ namespace RelationLibrary {
         public static bool operator !=(FunctionalDependency a, FunctionalDependency b) {
             return !a.Equals(b);
         }
+
+        public string ToString() {
+            return string.Format("{}->{}", string.Join("", Determinants.Select(attr => attr.ToString())), Dependent.ToString());
+        }
     }
 }
