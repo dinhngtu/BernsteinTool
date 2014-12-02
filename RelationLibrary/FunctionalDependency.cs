@@ -28,7 +28,7 @@ namespace RelationLibrary {
             return this.Determinants.SetEquals(other.Determinants) && this.Dependent == other.Dependent;
         }
 
-        public bool Equals(Object other) {
+        public override bool Equals(Object other) {
             if (other is FunctionalDependency) {
                 return this.Determinants.SetEquals(((FunctionalDependency)other).Determinants) &&
                     this.Dependent == ((FunctionalDependency)other).Dependent;
@@ -37,8 +37,15 @@ namespace RelationLibrary {
             }
         }
 
-        public int GetHashCode() {
-            return this.Determinants.GetHashCode() ^ this.Dependent.GetHashCode();
+        public override int GetHashCode() {
+            unchecked {
+                int acc = 17;
+                acc = ((acc << 5) - acc) ^ this.Dependent.GetHashCode();
+                foreach (var x in this.Determinants) {
+                    acc = ((acc << 5) - acc) ^ x.GetHashCode();
+                }
+                return acc;
+            }
         }
 
         public static bool operator ==(FunctionalDependency a, FunctionalDependency b) {
@@ -49,8 +56,8 @@ namespace RelationLibrary {
             return !a.Equals(b);
         }
 
-        public string ToString() {
-            return string.Format("{}->{}", string.Join("", Determinants.Select(attr => attr.ToString())), Dependent.ToString());
+        public override string ToString() {
+            return string.Format("{0}->{1}", string.Join("", Determinants.Select(attr => attr.ToString())), Dependent.ToString());
         }
     }
 }

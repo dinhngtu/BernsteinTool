@@ -20,7 +20,7 @@ namespace RelationLibrary {
             return this.Name == other.Name;
         }
 
-        public bool Equals(Object other) {
+        public override bool Equals(Object other) {
             if (other is Attribute) {
                 return this.Name == ((Attribute)other).Name;
             } else {
@@ -28,7 +28,7 @@ namespace RelationLibrary {
             }
         }
 
-        public int GetHashCode() {
+        public override int GetHashCode() {
             return this.Name.GetHashCode();
         }
 
@@ -40,7 +40,7 @@ namespace RelationLibrary {
             return !a.Equals(b);
         }
 
-        public string ToString() {
+        public override string ToString() {
             return this.Name;
         }
     }

@@ -119,8 +119,8 @@ namespace RelationLibrary {
             return dedup;
         }
 
-        public string ToString() {
-            return string.Format("{{ {} }}", string.Join(", ", FDs.Select(fd => fd.ToString())));
+        public override string ToString() {
+            return string.Format("{{ {0} }}", string.Join(", ", FDs.Select(fd => fd.ToString())));
         }
     }
 }
