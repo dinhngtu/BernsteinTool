@@ -41,11 +41,11 @@ namespace RelationLibrary {
             return this.Determinants.GetHashCode() ^ this.Dependent.GetHashCode();
         }
 
-        public static bool operator ==(Attribute a, Attribute b) {
+        public static bool operator ==(FunctionalDependency a, FunctionalDependency b) {
             return a.Equals(b);
         }
 
-        public static bool operator !=(Attribute a, Attribute b) {
+        public static bool operator !=(FunctionalDependency a, FunctionalDependency b) {
             return !a.Equals(b);
         }
     }
