@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -40,7 +41,7 @@ namespace RelationLibraryTest {
         public void EliminateExtraneousAttributesTest() {
             //var fd = new FunctionalDependency(Utilities.CreateSet(A, E), C);
             var fd = F.DependsOn(A, E);
-            Assert.IsTrue(fd.FDEquals(rel.EliminateExtraneousAttributes(F.DependsOn(A, B, E))));
+            Assert.IsTrue(fd == rel.EliminateExtraneousAttributes(F.DependsOn(A, B, E)));
             //Assert.IsTrue(fd == rel.EliminateExtraneousAttributes(F.DependsOn(A, B, E)));
         }
 
@@ -48,7 +49,7 @@ namespace RelationLibraryTest {
         public void MinimalCoveringTest() {
             var fds = new HashSet<FunctionalDependency>();
             var attributes = Utilities.CreateSet(A, B, C, D, E, F);
-            fds.Add(B.DependsOn(A));            
+            fds.Add(B.DependsOn(A));
             fds.Add(C.DependsOn(B));
             fds.Add(D.DependsOn(B));
             fds.Add(B.DependsOn(D));
