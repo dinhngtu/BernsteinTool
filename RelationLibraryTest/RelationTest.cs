@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -38,15 +38,15 @@ namespace RelationLibraryTest {
         }
 
         [TestMethod]
-        public void EliminateExtraneousAttributesTest() {
+        public void GetMinimalFDTest() {
             //var fd = new FunctionalDependency(Utilities.CreateSet(A, E), C);
             var fd = F.DependsOn(A, E);
-            Assert.IsTrue(fd == rel.EliminateExtraneousAttributes(F.DependsOn(A, B, E)));
+            Assert.IsTrue(fd == rel.GetMinimalFD(F.DependsOn(A, B, E)));
             //Assert.IsTrue(fd == rel.EliminateExtraneousAttributes(F.DependsOn(A, B, E)));
         }
 
         [TestMethod]
-        public void MinimalCoveringTest() {
+        public void GetMinimalCoveringTest() {
             var fds = new HashSet<FunctionalDependency>();
             var attributes = Utilities.CreateSet(A, B, C, D, E, F);
             fds.Add(B.DependsOn(A));
@@ -69,7 +69,7 @@ namespace RelationLibraryTest {
 
         [TestMethod]
         public void CreateRelationsTest() {
-            var eliminated = rel.FDs.Select(fd => rel.EliminateExtraneousAttributes(fd));
+            var eliminated = rel.FDs.Select(fd => rel.GetMinimalFD(fd));
             rel.FDs = new HashSet<FunctionalDependency>(eliminated);
             rel.FDs = rel.GetMinimalCovering();
             var finalResult = rel.CreateRelations();

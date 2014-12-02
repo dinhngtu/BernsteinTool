@@ -40,7 +40,7 @@ namespace RelationLibrary {
             return ret;
         }
 
-        public FunctionalDependency EliminateExtraneousAttributes(FunctionalDependency fd) {
+        public FunctionalDependency GetMinimalFD(FunctionalDependency fd) {
             if (fd.Determinants.Count == 1) {
                 return fd;
             }
@@ -84,7 +84,7 @@ namespace RelationLibrary {
             return testfds;
         }
 
-        public static HashSet<Attribute> GetAttributes(IEnumerable<FunctionalDependency> fds) {
+        public static HashSet<Attribute> GetAttributeSet(IEnumerable<FunctionalDependency> fds) {
             var attrs = new HashSet<Attribute>();
             foreach (var fd in fds) {
                 attrs.Add(fd.Dependent);
@@ -97,7 +97,7 @@ namespace RelationLibrary {
             throw new NotImplementedException();
         }
 
-        public HashSet<FunctionalDependency> GetFunctionalDependencies(HashSet<Attribute> attributes) {
+        public HashSet<FunctionalDependency> GetFDSubset(HashSet<Attribute> attributes) {
             var fds = new HashSet<FunctionalDependency>();
             foreach (var fd in this.FDs) {
                 if (attributes.Contains(fd.Dependent) && attributes.IsSupersetOf(fd.Determinants)) {
@@ -111,10 +111,10 @@ namespace RelationLibrary {
             var relations = new HashSet<Relation>();
             var keygroups = FDs.GroupBy(fd => fd.Determinants);
             foreach (var group in keygroups) {
-                relations.Add(new Relation(GetAttributes(group), new HashSet<FunctionalDependency>(group)));
+                relations.Add(new Relation(GetAttributeSet(group), new HashSet<FunctionalDependency>(group)));
             }
             var key = this.GetCandidateKey();
-            relations.Add(new Relation(key, GetFunctionalDependencies(key)));
+            relations.Add(new Relation(key, GetFDSubset(key)));
             var dedup = new HashSet<Relation>();
             foreach (var rel in relations) {
                 if (!relations.Any(r => rel.Attributes.IsSubsetOf(r.Attributes))) {
