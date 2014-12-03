@@ -78,6 +78,13 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RelationLibrary\RelationLibrary.csproj">
+      <Project>{9e0a86b6-c366-408b-8dc5-c7eb6eec3004}</Project>
+      <Name>RelationLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

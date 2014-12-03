@@ -25,27 +25,27 @@ namespace BernsteinTool {
         private void InitializeComponent() {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageAttributes = new System.Windows.Forms.TabPage();
-            this.tabPageFunctionalDependencies = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxAttributeName = new System.Windows.Forms.TextBox();
             this.buttonAddAttribute = new System.Windows.Forms.Button();
             this.buttonRemoveAttribute = new System.Windows.Forms.Button();
             this.listBoxAttributes = new System.Windows.Forms.ListBox();
-            this.buttonNext = new System.Windows.Forms.Button();
-            this.buttonBack = new System.Windows.Forms.Button();
-            this.tabPageSynthesis = new System.Windows.Forms.TabPage();
+            this.tabPageFunctionalDependencies = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.listViewAttributesForFD = new System.Windows.Forms.ListView();
-            this.listViewLHS = new System.Windows.Forms.ListView();
-            this.listViewRHS = new System.Windows.Forms.ListView();
-            this.listBoxFD = new System.Windows.Forms.ListBox();
+            this.listBoxFDs = new System.Windows.Forms.ListBox();
             this.buttonAddFD = new System.Windows.Forms.Button();
             this.buttonRemoveFD = new System.Windows.Forms.Button();
+            this.listBoxAttributesForFDs = new System.Windows.Forms.ListBox();
+            this.listBoxLHS = new System.Windows.Forms.ListBox();
+            this.listBoxRHS = new System.Windows.Forms.ListBox();
+            this.tabPageSynthesis = new System.Windows.Forms.TabPage();
+            this.buttonNext = new System.Windows.Forms.Button();
+            this.buttonBack = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPageAttributes.SuspendLayout();
-            this.tabPageFunctionalDependencies.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tabPageFunctionalDependencies.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,17 +73,6 @@ namespace BernsteinTool {
             this.tabPageAttributes.TabIndex = 0;
             this.tabPageAttributes.Text = "tabPage1";
             this.tabPageAttributes.UseVisualStyleBackColor = true;
-            // 
-            // tabPageFunctionalDependencies
-            // 
-            this.tabPageFunctionalDependencies.Controls.Add(this.tableLayoutPanel2);
-            this.tabPageFunctionalDependencies.Location = new System.Drawing.Point(4, 22);
-            this.tabPageFunctionalDependencies.Name = "tabPageFunctionalDependencies";
-            this.tabPageFunctionalDependencies.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFunctionalDependencies.Size = new System.Drawing.Size(852, 482);
-            this.tabPageFunctionalDependencies.TabIndex = 1;
-            this.tabPageFunctionalDependencies.Text = "tabPage2";
-            this.tabPageFunctionalDependencies.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel1
             // 
@@ -132,6 +121,7 @@ namespace BernsteinTool {
             this.buttonAddAttribute.TabIndex = 2;
             this.buttonAddAttribute.Text = "button1";
             this.buttonAddAttribute.UseVisualStyleBackColor = true;
+            this.buttonAddAttribute.Click += new System.EventHandler(this.buttonAddAttribute_Click);
             // 
             // buttonRemoveAttribute
             // 
@@ -141,16 +131,144 @@ namespace BernsteinTool {
             this.buttonRemoveAttribute.TabIndex = 3;
             this.buttonRemoveAttribute.Text = "button2";
             this.buttonRemoveAttribute.UseVisualStyleBackColor = true;
+            this.buttonRemoveAttribute.Click += new System.EventHandler(this.buttonRemoveAttribute_Click);
             // 
             // listBoxAttributes
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.listBoxAttributes, 3);
             this.listBoxAttributes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxAttributes.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxAttributes.FormattingEnabled = true;
+            this.listBoxAttributes.ItemHeight = 25;
             this.listBoxAttributes.Location = new System.Drawing.Point(3, 45);
             this.listBoxAttributes.Name = "listBoxAttributes";
+            this.listBoxAttributes.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listBoxAttributes.Size = new System.Drawing.Size(840, 428);
             this.listBoxAttributes.TabIndex = 4;
+            // 
+            // tabPageFunctionalDependencies
+            // 
+            this.tabPageFunctionalDependencies.Controls.Add(this.tableLayoutPanel2);
+            this.tabPageFunctionalDependencies.Location = new System.Drawing.Point(4, 22);
+            this.tabPageFunctionalDependencies.Name = "tabPageFunctionalDependencies";
+            this.tabPageFunctionalDependencies.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFunctionalDependencies.Size = new System.Drawing.Size(852, 482);
+            this.tabPageFunctionalDependencies.TabIndex = 1;
+            this.tabPageFunctionalDependencies.Text = "tabPage2";
+            this.tabPageFunctionalDependencies.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.00001F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.Controls.Add(this.listBoxFDs, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.buttonAddFD, 2, 2);
+            this.tableLayoutPanel2.Controls.Add(this.buttonRemoveFD, 3, 2);
+            this.tableLayoutPanel2.Controls.Add(this.listBoxAttributesForFDs, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.listBoxLHS, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.listBoxRHS, 1, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(846, 476);
+            this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // listBoxFDs
+            // 
+            this.tableLayoutPanel2.SetColumnSpan(this.listBoxFDs, 2);
+            this.listBoxFDs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxFDs.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBoxFDs.FormattingEnabled = true;
+            this.listBoxFDs.ItemHeight = 25;
+            this.listBoxFDs.Location = new System.Drawing.Point(682, 3);
+            this.listBoxFDs.Name = "listBoxFDs";
+            this.tableLayoutPanel2.SetRowSpan(this.listBoxFDs, 2);
+            this.listBoxFDs.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listBoxFDs.Size = new System.Drawing.Size(161, 440);
+            this.listBoxFDs.TabIndex = 3;
+            // 
+            // buttonAddFD
+            // 
+            this.buttonAddFD.Location = new System.Drawing.Point(682, 449);
+            this.buttonAddFD.Name = "buttonAddFD";
+            this.buttonAddFD.Size = new System.Drawing.Size(75, 23);
+            this.buttonAddFD.TabIndex = 4;
+            this.buttonAddFD.Text = "button1";
+            this.buttonAddFD.UseVisualStyleBackColor = true;
+            this.buttonAddFD.Click += new System.EventHandler(this.buttonAddFD_Click);
+            // 
+            // buttonRemoveFD
+            // 
+            this.buttonRemoveFD.Location = new System.Drawing.Point(763, 449);
+            this.buttonRemoveFD.Name = "buttonRemoveFD";
+            this.buttonRemoveFD.Size = new System.Drawing.Size(75, 23);
+            this.buttonRemoveFD.TabIndex = 5;
+            this.buttonRemoveFD.Text = "button2";
+            this.buttonRemoveFD.UseVisualStyleBackColor = true;
+            this.buttonRemoveFD.Click += new System.EventHandler(this.buttonRemoveFD_Click);
+            // 
+            // listBoxAttributesForFDs
+            // 
+            this.tableLayoutPanel2.SetColumnSpan(this.listBoxAttributesForFDs, 2);
+            this.listBoxAttributesForFDs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxAttributesForFDs.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBoxAttributesForFDs.FormattingEnabled = true;
+            this.listBoxAttributesForFDs.ItemHeight = 25;
+            this.listBoxAttributesForFDs.Location = new System.Drawing.Point(3, 3);
+            this.listBoxAttributesForFDs.Name = "listBoxAttributesForFDs";
+            this.listBoxAttributesForFDs.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listBoxAttributesForFDs.Size = new System.Drawing.Size(673, 217);
+            this.listBoxAttributesForFDs.TabIndex = 6;
+            this.listBoxAttributesForFDs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxAttributesForFDs_MouseDown);
+            // 
+            // listBoxLHS
+            // 
+            this.listBoxLHS.AllowDrop = true;
+            this.listBoxLHS.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxLHS.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBoxLHS.FormattingEnabled = true;
+            this.listBoxLHS.ItemHeight = 25;
+            this.listBoxLHS.Location = new System.Drawing.Point(3, 226);
+            this.listBoxLHS.Name = "listBoxLHS";
+            this.tableLayoutPanel2.SetRowSpan(this.listBoxLHS, 2);
+            this.listBoxLHS.Size = new System.Drawing.Size(333, 247);
+            this.listBoxLHS.TabIndex = 7;
+            this.listBoxLHS.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBoxLHS_DragDrop);
+            this.listBoxLHS.DragOver += new System.Windows.Forms.DragEventHandler(this.listBoxLHS_DragOver);
+            this.listBoxLHS.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxLHS_MouseDoubleClick);
+            // 
+            // listBoxRHS
+            // 
+            this.listBoxRHS.AllowDrop = true;
+            this.listBoxRHS.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxRHS.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBoxRHS.FormattingEnabled = true;
+            this.listBoxRHS.ItemHeight = 25;
+            this.listBoxRHS.Location = new System.Drawing.Point(342, 226);
+            this.listBoxRHS.Name = "listBoxRHS";
+            this.tableLayoutPanel2.SetRowSpan(this.listBoxRHS, 2);
+            this.listBoxRHS.Size = new System.Drawing.Size(334, 247);
+            this.listBoxRHS.TabIndex = 8;
+            this.listBoxRHS.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBoxRHS_DragDrop);
+            this.listBoxRHS.DragOver += new System.Windows.Forms.DragEventHandler(this.listBoxRHS_DragOver);
+            this.listBoxRHS.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxRHS_MouseDoubleClick);
+            // 
+            // tabPageSynthesis
+            // 
+            this.tabPageSynthesis.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSynthesis.Name = "tabPageSynthesis";
+            this.tabPageSynthesis.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSynthesis.Size = new System.Drawing.Size(852, 482);
+            this.tabPageSynthesis.TabIndex = 2;
+            this.tabPageSynthesis.Text = "tabPage1";
+            this.tabPageSynthesis.UseVisualStyleBackColor = true;
             // 
             // buttonNext
             // 
@@ -173,99 +291,6 @@ namespace BernsteinTool {
             this.buttonBack.UseVisualStyleBackColor = true;
             this.buttonBack.Visible = false;
             // 
-            // tabPageSynthesis
-            // 
-            this.tabPageSynthesis.Location = new System.Drawing.Point(4, 22);
-            this.tabPageSynthesis.Name = "tabPageSynthesis";
-            this.tabPageSynthesis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSynthesis.Size = new System.Drawing.Size(852, 482);
-            this.tabPageSynthesis.TabIndex = 2;
-            this.tabPageSynthesis.Text = "tabPage1";
-            this.tabPageSynthesis.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.00001F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.Controls.Add(this.listViewAttributesForFD, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.listViewLHS, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.listViewRHS, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.listBoxFD, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.buttonAddFD, 2, 2);
-            this.tableLayoutPanel2.Controls.Add(this.buttonRemoveFD, 3, 2);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(846, 476);
-            this.tableLayoutPanel2.TabIndex = 0;
-            // 
-            // listViewAttributesForFD
-            // 
-            this.tableLayoutPanel2.SetColumnSpan(this.listViewAttributesForFD, 2);
-            this.listViewAttributesForFD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewAttributesForFD.Location = new System.Drawing.Point(3, 3);
-            this.listViewAttributesForFD.Name = "listViewAttributesForFD";
-            this.listViewAttributesForFD.Size = new System.Drawing.Size(677, 217);
-            this.listViewAttributesForFD.TabIndex = 0;
-            this.listViewAttributesForFD.UseCompatibleStateImageBehavior = false;
-            // 
-            // listViewLHS
-            // 
-            this.listViewLHS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewLHS.Location = new System.Drawing.Point(3, 226);
-            this.listViewLHS.Name = "listViewLHS";
-            this.tableLayoutPanel2.SetRowSpan(this.listViewLHS, 2);
-            this.listViewLHS.Size = new System.Drawing.Size(335, 247);
-            this.listViewLHS.TabIndex = 1;
-            this.listViewLHS.UseCompatibleStateImageBehavior = false;
-            // 
-            // listViewRHS
-            // 
-            this.listViewRHS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewRHS.Location = new System.Drawing.Point(344, 226);
-            this.listViewRHS.Name = "listViewRHS";
-            this.tableLayoutPanel2.SetRowSpan(this.listViewRHS, 2);
-            this.listViewRHS.Size = new System.Drawing.Size(336, 247);
-            this.listViewRHS.TabIndex = 2;
-            this.listViewRHS.UseCompatibleStateImageBehavior = false;
-            // 
-            // listBoxFD
-            // 
-            this.tableLayoutPanel2.SetColumnSpan(this.listBoxFD, 2);
-            this.listBoxFD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxFD.FormattingEnabled = true;
-            this.listBoxFD.Location = new System.Drawing.Point(686, 3);
-            this.listBoxFD.Name = "listBoxFD";
-            this.tableLayoutPanel2.SetRowSpan(this.listBoxFD, 2);
-            this.listBoxFD.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxFD.Size = new System.Drawing.Size(157, 440);
-            this.listBoxFD.TabIndex = 3;
-            // 
-            // buttonAddFD
-            // 
-            this.buttonAddFD.Location = new System.Drawing.Point(686, 449);
-            this.buttonAddFD.Name = "buttonAddFD";
-            this.buttonAddFD.Size = new System.Drawing.Size(75, 23);
-            this.buttonAddFD.TabIndex = 4;
-            this.buttonAddFD.Text = "button1";
-            this.buttonAddFD.UseVisualStyleBackColor = true;
-            // 
-            // buttonRemoveFD
-            // 
-            this.buttonRemoveFD.Location = new System.Drawing.Point(767, 449);
-            this.buttonRemoveFD.Name = "buttonRemoveFD";
-            this.buttonRemoveFD.Size = new System.Drawing.Size(75, 23);
-            this.buttonRemoveFD.TabIndex = 5;
-            this.buttonRemoveFD.Text = "button2";
-            this.buttonRemoveFD.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -278,9 +303,9 @@ namespace BernsteinTool {
             this.Text = "MainForm";
             this.tabControl1.ResumeLayout(false);
             this.tabPageAttributes.ResumeLayout(false);
-            this.tabPageFunctionalDependencies.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.tabPageFunctionalDependencies.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -301,11 +326,11 @@ namespace BernsteinTool {
         private System.Windows.Forms.Button buttonBack;
         private System.Windows.Forms.TabPage tabPageSynthesis;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.ListView listViewAttributesForFD;
-        private System.Windows.Forms.ListView listViewLHS;
-        private System.Windows.Forms.ListView listViewRHS;
-        private System.Windows.Forms.ListBox listBoxFD;
+        private System.Windows.Forms.ListBox listBoxFDs;
         private System.Windows.Forms.Button buttonAddFD;
         private System.Windows.Forms.Button buttonRemoveFD;
+        private System.Windows.Forms.ListBox listBoxAttributesForFDs;
+        private System.Windows.Forms.ListBox listBoxLHS;
+        private System.Windows.Forms.ListBox listBoxRHS;
     }
 }
