@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using RelationLibrary;
 using Attribute = RelationLibrary.Attribute;
+using Microsoft.QualityTools.Testing.Fakes;
 
 namespace RelationLibraryTest {
     [TestClass]
@@ -71,19 +72,19 @@ namespace RelationLibraryTest {
         [TestMethod]
         public void GetCandidateKeyTest1() {
             var realCK = Utilities.CreateSet(A, D);
-            Relation rel2;            
+            Relation rel2;
             var attributes = Utilities.CreateSet(A, B, C, D);
-            var fds = new HashSet<FunctionalDependency>();            
+            var fds = new HashSet<FunctionalDependency>();
             fds.Add(C.DependsOn(A));
             fds.Add(D.DependsOn(B));
-            fds.Add(B.DependsOn(D, A));       
+            fds.Add(B.DependsOn(D, A));
             rel2 = new Relation(attributes, fds);
             Assert.IsTrue(realCK.SetEquals(rel2.GetCandidateKey()));
         }
 
         [TestMethod]
         public void GetCandidateKeyTest2() {
-            var realCK = Utilities.CreateSet(A, E);            
+            var realCK = Utilities.CreateSet(A, E);
             Assert.IsTrue(realCK.SetEquals(rel.GetCandidateKey()));
         }
 
@@ -94,15 +95,26 @@ namespace RelationLibraryTest {
             rel.FDs = rel.GetMinimalCovering();
             var finalResult = rel.CreateRelations();
             Trace.WriteLine(finalResult.Count);
-            foreach (var r in finalResult){
+            foreach (var r in finalResult) {
                 Trace.WriteLine(r);
             }
-            Assert.IsTrue(finalResult.SetEquals(Utilities.CreateSet(
-                new Relation(Utilities.CreateSet(A, B), B.DependsOn(A)),
-                new Relation(Utilities.CreateSet(B, D, C), C.DependsOn(B, D)),
-                new Relation(Utilities.CreateSet(A, E, F), F.DependsOn(A, E))
-                )));
+            var comp = new HashSetEqualityComparer<Attribute>();
+            var actual = new HashSet<HashSet<Attribute>>(finalResult.Select(x => x.Attributes), comp);
+            var expected = Utilities.CreateSet(
+                Utilities.CreateSet(A, B),
+                Utilities.CreateSet(B, D, C),
+                Utilities.CreateSet(A, E, F)
+                );
+            Assert.IsTrue(actual.SetEquals(expected));
         }
 
+        [TestMethod]
+        public void CreateRelationsTest2() {
+            using (ShimsContext.Create()) {
+                RelationLibrary.Fakes.ShimRelation.AllInstances.GetMinCandidateKeyHashSetOfAttributeHashSetOfAttribute =
+                    (x, y, z) => Utilities.CreateSet(A, E, F);
+                CreateRelationsTest();
+            }
+        }
     }
 }

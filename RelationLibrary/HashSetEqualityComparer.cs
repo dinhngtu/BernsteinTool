@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace RelationLibrary {
-    class HashSetEqualityComparer<T> : EqualityComparer<HashSet<T>> {
+    public class HashSetEqualityComparer<T> : EqualityComparer<HashSet<T>> {
         public override bool Equals(HashSet<T> x, HashSet<T> y) {
             return x.SetEquals(y);
         }
