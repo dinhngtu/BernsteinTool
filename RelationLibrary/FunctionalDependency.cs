@@ -16,12 +16,14 @@ namespace RelationLibrary {
             this.Dependent = dependent;
         }
 
-        public static HashSet<FunctionalDependency> Decompose(HashSet<Attribute> determinants, HashSet<Attribute> dependents) {
-            var ret = new HashSet<FunctionalDependency>();
+        public static IEnumerable<FunctionalDependency> Decompose(HashSet<Attribute> determinants, HashSet<Attribute> dependents) {
             foreach (var dependent in dependents) {
-                ret.Add(new FunctionalDependency(determinants, dependent));
+                yield return new FunctionalDependency(determinants, dependent);
             }
-            return ret;
+        }
+
+        public bool HasAttribute(Attribute attr) {
+            return attr == Dependent || Determinants.Contains(attr);
         }
 
         public bool Equals(FunctionalDependency other) {
