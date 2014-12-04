@@ -93,6 +93,10 @@ namespace RelationLibraryTest {
             rel.FDs = new HashSet<FunctionalDependency>(eliminated);
             rel.FDs = rel.GetMinimalCovering();
             var finalResult = rel.CreateRelations();
+            Trace.WriteLine(finalResult.Count);
+            foreach (var r in finalResult){
+                Trace.WriteLine(r);
+            }
             Assert.IsTrue(finalResult.SetEquals(Utilities.CreateSet(
                 new Relation(Utilities.CreateSet(A, B), B.DependsOn(A)),
                 new Relation(Utilities.CreateSet(B, D, C), C.DependsOn(B, D)),

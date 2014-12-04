@@ -137,10 +137,11 @@ namespace RelationLibrary {
                 relations.Add(new Relation(GetAttributeSet(group), new HashSet<FunctionalDependency>(group)));
             }
             var key = this.GetCandidateKey();
-            relations.Add(new Relation(key, GetFDSubset(key)));
+            var crel = new Relation(key, GetFDSubset(key));
+            relations.Add(crel);
             var dedup = new HashSet<Relation>();
             foreach (var rel in relations) {
-                if (!relations.Any(r => rel.Attributes.IsSubsetOf(r.Attributes))) {
+                if (!relations.Any(r => r != rel && r.Attributes.IsSupersetOf(rel.Attributes))) {
                     dedup.Add(rel);
                 }
             }
