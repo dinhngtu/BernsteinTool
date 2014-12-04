@@ -138,5 +138,34 @@ namespace BernsteinTool {
         }
 
         #endregion
+
+        #region Synthesis
+
+        private void buttonRun_Click(object sender, EventArgs e) {
+            Relation rel = new Relation(new HashSet<Attribute>(attributes), new HashSet<FunctionalDependency>(fds));
+
+            textBoxOutput.AppendText("Step 0. Begin\n");
+            textBoxOutput.AppendText(string.Format("Original relation: {0}\n", rel.ToString()));
+            textBoxOutput.AppendText("\n");
+
+            textBoxOutput.AppendText("Step 1. Eliminate extraneous attributes\n");
+            rel.FDs = new HashSet<FunctionalDependency>(rel.FDs.Select(fd => rel.GetMinimalFD(fd)));
+            textBoxOutput.AppendText(string.Format("Output: {0}\n", rel.ToString()));
+            textBoxOutput.AppendText("\n");
+
+            textBoxOutput.AppendText("Step 2. Find minimal covering\n");
+            rel.FDs = rel.GetMinimalCovering();
+            textBoxOutput.AppendText(string.Format("Output: {0}\n", rel.ToString()));
+            textBoxOutput.AppendText("\n");
+
+            textBoxOutput.AppendText("Step 4. Construct 3NF relations\n");
+            textBoxOutput.AppendText("Output:\n");
+            foreach (var r in rel.CreateRelations()) {
+                textBoxOutput.AppendText(r.ToString());
+                textBoxOutput.AppendText("\n");
+            }
+        }
+
+        #endregion
     }
 }

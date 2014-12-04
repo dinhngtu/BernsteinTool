@@ -96,28 +96,32 @@ namespace RelationLibrary {
         public HashSet<Attribute> GetCandidateKey() {
             //throw new NotImplementedException();
             this.FDs = this.GetMinimalCovering();
-            return GetMinCandidateKey(this.Attributes, this.Attributes);
+            return GetMinimalCandidateKey(this.Attributes, this.Attributes);
             //var optimalKeys = new HashSet<Attribute>();
             //var possibleKeys = new HashSet<Attribute>();
             //var notKeys = new HashSet<Attribute>();
 
         }
 
-        public HashSet<Attribute> GetMinCandidateKey(HashSet<Attribute> currentAtts, HashSet<Attribute> minCK) {
-            var currentClosure = this.GetClosure(currentAtts);
+        public HashSet<Attribute> GetMinimalCandidateKey(HashSet<Attribute> currentAttrs, HashSet<Attribute> minCK) {
+            var currentClosure = this.GetClosure(currentAttrs);
             if (this.Attributes.SetEquals(currentClosure)
-                && currentAtts.Count <= minCK.Count) minCK = currentAtts;
+                && currentAttrs.Count <= minCK.Count) minCK = currentAttrs;
             else return minCK;
-            if (currentAtts.Count == 1) return minCK;
-            foreach (var att in currentAtts) {
-                var subset = new HashSet<Attribute>(currentAtts);
+            if (currentAttrs.Count == 1) return minCK;
+            foreach (var att in currentAttrs) {
+                var subset = new HashSet<Attribute>(currentAttrs);
                 subset.Remove(att);
-                var subsetMinCK = GetMinCandidateKey(subset, minCK);
+                var subsetMinCK = GetMinimalCandidateKey(subset, minCK);
                 if (minCK.Count > subsetMinCK.Count) {
                     minCK = subsetMinCK;
                 }
             }
             return minCK;
+        }
+
+        public bool IsCandidateKey(HashSet<Attribute> attrs) {
+            return this.Attributes.SetEquals(GetClosure(attrs));
         }
 
         public HashSet<FunctionalDependency> GetFDSubset(HashSet<Attribute> attributes) {
@@ -149,14 +153,14 @@ namespace RelationLibrary {
                     dedup.Add(rel);
                 }
             }
-            if (addCrel) {
+            if (addCrel && !dedup.Any(r => IsCandidateKey(r.Attributes))) {
                 dedup.Add(crel);
             }
             return dedup;
         }
 
         public override string ToString() {
-            return string.Format("{{ ({0}); {1} }}", string.Join("", Attributes), string.Join(", ", FDs.Select(fd => fd.ToString())));
+            return string.Format("({0}): {{ {1} }}", string.Join("", Attributes), string.Join(", ", FDs.Select(fd => fd.ToString())));
         }
     }
 }

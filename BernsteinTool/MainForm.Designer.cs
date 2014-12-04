@@ -42,11 +42,17 @@ namespace BernsteinTool {
             this.tabPageSynthesis = new System.Windows.Forms.TabPage();
             this.buttonNext = new System.Windows.Forms.Button();
             this.buttonBack = new System.Windows.Forms.Button();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonRun = new System.Windows.Forms.Button();
+            this.textBoxOutput = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageAttributes.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabPageFunctionalDependencies.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tabPageSynthesis.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -160,17 +166,19 @@ namespace BernsteinTool {
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnCount = 5;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.99999F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.00001F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.Controls.Add(this.listBoxFDs, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.buttonAddFD, 2, 2);
-            this.tableLayoutPanel2.Controls.Add(this.buttonClearFDs, 3, 2);
+            this.tableLayoutPanel2.Controls.Add(this.listBoxFDs, 3, 0);
+            this.tableLayoutPanel2.Controls.Add(this.buttonAddFD, 3, 2);
+            this.tableLayoutPanel2.Controls.Add(this.buttonClearFDs, 4, 2);
             this.tableLayoutPanel2.Controls.Add(this.listBoxAttributesForFDs, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.listBoxLHS, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.listBoxRHS, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.listBoxRHS, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label2, 1, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -178,6 +186,7 @@ namespace BernsteinTool {
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(846, 476);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
@@ -188,16 +197,16 @@ namespace BernsteinTool {
             this.listBoxFDs.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxFDs.FormattingEnabled = true;
             this.listBoxFDs.ItemHeight = 25;
-            this.listBoxFDs.Location = new System.Drawing.Point(680, 3);
+            this.listBoxFDs.Location = new System.Drawing.Point(679, 3);
             this.listBoxFDs.Name = "listBoxFDs";
             this.tableLayoutPanel2.SetRowSpan(this.listBoxFDs, 2);
             this.listBoxFDs.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxFDs.Size = new System.Drawing.Size(163, 440);
+            this.listBoxFDs.Size = new System.Drawing.Size(164, 440);
             this.listBoxFDs.TabIndex = 3;
             // 
             // buttonAddFD
             // 
-            this.buttonAddFD.Location = new System.Drawing.Point(680, 449);
+            this.buttonAddFD.Location = new System.Drawing.Point(679, 449);
             this.buttonAddFD.Name = "buttonAddFD";
             this.buttonAddFD.Size = new System.Drawing.Size(75, 23);
             this.buttonAddFD.TabIndex = 4;
@@ -207,7 +216,7 @@ namespace BernsteinTool {
             // 
             // buttonClearFDs
             // 
-            this.buttonClearFDs.Location = new System.Drawing.Point(761, 449);
+            this.buttonClearFDs.Location = new System.Drawing.Point(760, 449);
             this.buttonClearFDs.Name = "buttonClearFDs";
             this.buttonClearFDs.Size = new System.Drawing.Size(75, 23);
             this.buttonClearFDs.TabIndex = 5;
@@ -217,7 +226,7 @@ namespace BernsteinTool {
             // 
             // listBoxAttributesForFDs
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.listBoxAttributesForFDs, 2);
+            this.tableLayoutPanel2.SetColumnSpan(this.listBoxAttributesForFDs, 3);
             this.listBoxAttributesForFDs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBoxAttributesForFDs.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxAttributesForFDs.FormattingEnabled = true;
@@ -225,7 +234,7 @@ namespace BernsteinTool {
             this.listBoxAttributesForFDs.Location = new System.Drawing.Point(3, 3);
             this.listBoxAttributesForFDs.Name = "listBoxAttributesForFDs";
             this.listBoxAttributesForFDs.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxAttributesForFDs.Size = new System.Drawing.Size(671, 217);
+            this.listBoxAttributesForFDs.Size = new System.Drawing.Size(670, 217);
             this.listBoxAttributesForFDs.TabIndex = 6;
             this.listBoxAttributesForFDs.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxAttributesForFDs_MouseDoubleClick);
             this.listBoxAttributesForFDs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxAttributesForFDs_MouseDown);
@@ -240,7 +249,7 @@ namespace BernsteinTool {
             this.listBoxLHS.Location = new System.Drawing.Point(3, 226);
             this.listBoxLHS.Name = "listBoxLHS";
             this.tableLayoutPanel2.SetRowSpan(this.listBoxLHS, 2);
-            this.listBoxLHS.Size = new System.Drawing.Size(332, 247);
+            this.listBoxLHS.Size = new System.Drawing.Size(317, 247);
             this.listBoxLHS.TabIndex = 7;
             this.listBoxLHS.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBoxLHS_DragDrop);
             this.listBoxLHS.DragOver += new System.Windows.Forms.DragEventHandler(this.listBoxLHS_DragOver);
@@ -253,10 +262,10 @@ namespace BernsteinTool {
             this.listBoxRHS.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxRHS.FormattingEnabled = true;
             this.listBoxRHS.ItemHeight = 25;
-            this.listBoxRHS.Location = new System.Drawing.Point(341, 226);
+            this.listBoxRHS.Location = new System.Drawing.Point(355, 226);
             this.listBoxRHS.Name = "listBoxRHS";
             this.tableLayoutPanel2.SetRowSpan(this.listBoxRHS, 2);
-            this.listBoxRHS.Size = new System.Drawing.Size(333, 247);
+            this.listBoxRHS.Size = new System.Drawing.Size(318, 247);
             this.listBoxRHS.TabIndex = 8;
             this.listBoxRHS.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBoxRHS_DragDrop);
             this.listBoxRHS.DragOver += new System.Windows.Forms.DragEventHandler(this.listBoxRHS_DragOver);
@@ -264,6 +273,7 @@ namespace BernsteinTool {
             // 
             // tabPageSynthesis
             // 
+            this.tabPageSynthesis.Controls.Add(this.tableLayoutPanel3);
             this.tabPageSynthesis.Location = new System.Drawing.Point(4, 22);
             this.tabPageSynthesis.Name = "tabPageSynthesis";
             this.tabPageSynthesis.Padding = new System.Windows.Forms.Padding(3);
@@ -293,6 +303,55 @@ namespace BernsteinTool {
             this.buttonBack.UseVisualStyleBackColor = true;
             this.buttonBack.Visible = false;
             // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.buttonRun, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.textBoxOutput, 0, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(846, 476);
+            this.tableLayoutPanel3.TabIndex = 0;
+            // 
+            // buttonRun
+            // 
+            this.buttonRun.Location = new System.Drawing.Point(3, 3);
+            this.buttonRun.Name = "buttonRun";
+            this.buttonRun.Size = new System.Drawing.Size(75, 23);
+            this.buttonRun.TabIndex = 0;
+            this.buttonRun.Text = "button1";
+            this.buttonRun.UseVisualStyleBackColor = true;
+            this.buttonRun.Click += new System.EventHandler(this.buttonRun_Click);
+            // 
+            // textBoxOutput
+            // 
+            this.textBoxOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxOutput.Location = new System.Drawing.Point(3, 32);
+            this.textBoxOutput.Multiline = true;
+            this.textBoxOutput.Name = "textBoxOutput";
+            this.textBoxOutput.ReadOnly = true;
+            this.textBoxOutput.Size = new System.Drawing.Size(840, 441);
+            this.textBoxOutput.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(326, 223);
+            this.label2.Name = "label2";
+            this.tableLayoutPanel2.SetRowSpan(this.label2, 2);
+            this.label2.Size = new System.Drawing.Size(23, 253);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "->";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -309,6 +368,10 @@ namespace BernsteinTool {
             this.tableLayoutPanel1.PerformLayout();
             this.tabPageFunctionalDependencies.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
+            this.tabPageSynthesis.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -334,5 +397,9 @@ namespace BernsteinTool {
         private System.Windows.Forms.ListBox listBoxAttributesForFDs;
         private System.Windows.Forms.ListBox listBoxLHS;
         private System.Windows.Forms.ListBox listBoxRHS;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Button buttonRun;
+        private System.Windows.Forms.TextBox textBoxOutput;
+        private System.Windows.Forms.Label label2;
     }
 }
