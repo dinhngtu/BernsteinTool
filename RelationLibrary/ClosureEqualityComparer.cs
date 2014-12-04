@@ -20,7 +20,9 @@ namespace RelationLibrary {
         public override int GetHashCode(HashSet<Attribute> obj) {
             int acc = 0;
             foreach (var x in Relation.GetClosure(obj)) {
-                acc |= x.GetHashCode();
+                unchecked {
+                    acc += x.GetHashCode();
+                }
             }
             return acc;
         }
