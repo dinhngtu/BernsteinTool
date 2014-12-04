@@ -42,7 +42,7 @@ namespace RelationLibrary {
                 int acc = 17;
                 acc = ((acc << 5) - acc) ^ this.Dependent.GetHashCode();
                 foreach (var x in this.Determinants) {
-                    acc = ((acc << 5) - acc) ^ x.GetHashCode();
+                    acc = acc ^ x.GetHashCode();
                 }
                 return acc;
             }
