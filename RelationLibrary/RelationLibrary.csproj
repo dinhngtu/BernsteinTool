@@ -42,7 +42,6 @@
     <Compile Include="Attribute.cs" />
     <Compile Include="ClosureEqualityComparer.cs" />
     <Compile Include="FunctionalDependency.cs" />
-    <Compile Include="HashSetEqualityComparer.cs" />
     <Compile Include="LingTompaKameda.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relation.cs" />

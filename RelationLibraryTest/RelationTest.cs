@@ -100,7 +100,7 @@ namespace RelationLibraryTest {
             foreach (var r in finalResult) {
                 Trace.WriteLine(r);
             }
-            var comp = new HashSetEqualityComparer<Attribute>();
+            var comp = HashSet<Attribute>.CreateSetComparer();
             var actual = new HashSet<HashSet<Attribute>>(finalResult.Select(x => x.Attributes), comp);
             var expected = Utilities.CreateSet(
                 Utilities.CreateSet(A, B),
