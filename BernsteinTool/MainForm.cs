@@ -144,6 +144,8 @@ namespace BernsteinTool {
         #region Synthesis
 
         private void buttonRun_Click(object sender, EventArgs e) {
+            textBoxOutput.ResetText();
+
             Relation rel = new Relation(new HashSet<Attribute>(attributes), new HashSet<FunctionalDependency>(fds));
 
             textBoxOutput.AppendText("Step 0. Begin\n");
