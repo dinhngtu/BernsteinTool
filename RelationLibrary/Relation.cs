@@ -120,7 +120,7 @@ namespace RelationLibrary {
             return minCK;
         }
 
-        public bool IsCandidateKey(HashSet<Attribute> attrs) {
+        public bool IsSuperkey(HashSet<Attribute> attrs) {
             return this.Attributes.SetEquals(GetClosure(attrs));
         }
 
@@ -154,7 +154,7 @@ namespace RelationLibrary {
                     dedup.Add(rel);
                 }
             }
-            if (addCrel && !dedup.Any(r => IsCandidateKey(r.Attributes))) {
+            if (addCrel && !dedup.Any(r => IsSuperkey(r.Attributes))) {
                 dedup.Add(crel);
             }
             return dedup;
