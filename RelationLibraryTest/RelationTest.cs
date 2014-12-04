@@ -1,25 +1,26 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using RelationLibrary;
+using Attribute = RelationLibrary.Attribute;
 
 namespace RelationLibraryTest {
     [TestClass]
     public class RelationTest {
         Relation rel;
-        RelationLibrary.Attribute A, B, C, D, E, F;
+        Attribute A, B, C, D, E, F;
 
         [TestInitialize]
         public void TestInitialize() {
-            A = new RelationLibrary.Attribute("A");
-            B = new RelationLibrary.Attribute("B");
-            C = new RelationLibrary.Attribute("C");
-            D = new RelationLibrary.Attribute("D");
-            E = new RelationLibrary.Attribute("E");
-            F = new RelationLibrary.Attribute("F");
+            A = new Attribute("A");
+            B = new Attribute("B");
+            C = new Attribute("C");
+            D = new Attribute("D");
+            E = new Attribute("E");
+            F = new Attribute("F");
             var attributes = Utilities.CreateSet(A, B, C, D, E, F);
             var fds = new HashSet<FunctionalDependency>();
             fds.Add(B.DependsOn(A));
@@ -38,15 +39,15 @@ namespace RelationLibraryTest {
         }
 
         [TestMethod]
-        public void EliminateExtraneousAttributesTest() {
+        public void GetMinimalFDTest() {
             //var fd = new FunctionalDependency(Utilities.CreateSet(A, E), C);
             var fd = F.DependsOn(A, E);
-            Assert.IsTrue(fd == rel.EliminateExtraneousAttributes(F.DependsOn(A, B, E)));
+            Assert.IsTrue(fd == rel.GetMinimalFD(F.DependsOn(A, B, E)));
             //Assert.IsTrue(fd == rel.EliminateExtraneousAttributes(F.DependsOn(A, B, E)));
         }
 
         [TestMethod]
-        public void MinimalCoveringTest() {
+        public void GetMinimalCoveringTest() {
             var fds = new HashSet<FunctionalDependency>();
             var attributes = Utilities.CreateSet(A, B, C, D, E, F);
             fds.Add(B.DependsOn(A));
@@ -60,7 +61,7 @@ namespace RelationLibraryTest {
 
         [TestMethod]
         public void EqualTest() {
-            Assert.AreEqual(new RelationLibrary.Attribute("A"), new RelationLibrary.Attribute("A"));
+            Assert.AreEqual(new Attribute("A"), new Attribute("A"));
             Assert.AreEqual(B.DependsOn(C, D), B.DependsOn(C, D));
             Assert.AreEqual(B.DependsOn(C, D).GetHashCode(), B.DependsOn(C, D).GetHashCode());
             Assert.AreEqual(B.DependsOn(C, D), B.DependsOn(D, C));
@@ -88,7 +89,7 @@ namespace RelationLibraryTest {
 
         [TestMethod]
         public void CreateRelationsTest() {
-            var eliminated = rel.FDs.Select(fd => rel.EliminateExtraneousAttributes(fd));
+            var eliminated = rel.FDs.Select(fd => rel.GetMinimalFD(fd));
             rel.FDs = new HashSet<FunctionalDependency>(eliminated);
             rel.FDs = rel.GetMinimalCovering();
             var finalResult = rel.CreateRelations();
