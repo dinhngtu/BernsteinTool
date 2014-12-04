@@ -138,12 +138,19 @@ namespace RelationLibrary {
             }
             var key = this.GetCandidateKey();
             var crel = new Relation(key, GetFDSubset(key));
-            relations.Add(crel);
             var dedup = new HashSet<Relation>();
+            var addCrel = true;
             foreach (var rel in relations) {
-                if (!relations.Any(r => r != rel && r.Attributes.IsSupersetOf(rel.Attributes))) {
+                if (!rel.Attributes.IsSubsetOf(crel.Attributes) &&
+                    !relations.Any(r => r != rel && r.Attributes.IsSupersetOf(rel.Attributes))) {
+                    if (crel.Attributes.IsProperSubsetOf(rel.Attributes)) {
+                        addCrel = false;
+                    }
                     dedup.Add(rel);
                 }
+            }
+            if (addCrel) {
+                dedup.Add(crel);
             }
             return dedup;
         }
