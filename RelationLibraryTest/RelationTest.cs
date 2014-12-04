@@ -93,7 +93,9 @@ namespace RelationLibraryTest {
             var eliminated = rel.FDs.Select(fd => rel.GetMinimalFD(fd));
             rel.FDs = new HashSet<FunctionalDependency>(eliminated);
             rel.FDs = rel.GetMinimalCovering();
+#pragma warning disable 0612
             var finalResult = rel.CreateRelations();
+#pragma warning restore 0612
             Trace.WriteLine(finalResult.Count);
             foreach (var r in finalResult) {
                 Trace.WriteLine(r);

@@ -134,6 +134,7 @@ namespace RelationLibrary {
             return fds;
         }
 
+        [Obsolete]
         public HashSet<Relation> CreateRelations() {
             var relations = new HashSet<Relation>();
             var keygroups = FDs.GroupBy(fd => fd.Determinants, new HashSetEqualityComparer<Attribute>());
