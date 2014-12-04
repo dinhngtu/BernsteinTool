@@ -94,7 +94,30 @@ namespace RelationLibrary {
         }
 
         public HashSet<Attribute> GetCandidateKey() {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            this.FDs = this.GetMinimalCovering();
+            return GetMinCandidateKey(this.Attributes, this.Attributes);
+            //var optimalKeys = new HashSet<Attribute>();
+            //var possibleKeys = new HashSet<Attribute>();
+            //var notKeys = new HashSet<Attribute>();
+
+        }
+
+        public HashSet<Attribute> GetMinCandidateKey(HashSet<Attribute> currentAtts, HashSet<Attribute> minCK) {
+            var currentClosure = this.GetClosure(currentAtts);
+            if (this.Attributes.SetEquals(currentClosure)
+                && currentAtts.Count <= minCK.Count) minCK = currentAtts;
+            else return minCK;
+            if (currentAtts.Count == 1) return minCK;
+            foreach (var att in currentAtts) {
+                var subset = new HashSet<Attribute>(currentAtts);
+                subset.Remove(att);
+                var subsetMinCK = GetMinCandidateKey(subset, minCK);
+                if (minCK.Count > subsetMinCK.Count) {
+                    minCK = subsetMinCK;
+                }
+            }
+            return minCK;
         }
 
         public HashSet<FunctionalDependency> GetFunctionalDependencies(HashSet<Attribute> attributes) {

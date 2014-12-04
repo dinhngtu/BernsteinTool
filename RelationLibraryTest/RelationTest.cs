@@ -68,6 +68,25 @@ namespace RelationLibraryTest {
         }
 
         [TestMethod]
+        public void GetCandidateKeyTest1() {
+            var realCK = Utilities.CreateSet(A, D);
+            Relation rel2;            
+            var attributes = Utilities.CreateSet(A, B, C, D);
+            var fds = new HashSet<FunctionalDependency>();            
+            fds.Add(C.DependsOn(A));
+            fds.Add(D.DependsOn(B));
+            fds.Add(B.DependsOn(D, A));       
+            rel2 = new Relation(attributes, fds);
+            Assert.IsTrue(realCK.SetEquals(rel2.GetCandidateKey()));
+        }
+
+        [TestMethod]
+        public void GetCandidateKeyTest2() {
+            var realCK = Utilities.CreateSet(A, E);            
+            Assert.IsTrue(realCK.SetEquals(rel.GetCandidateKey()));
+        }
+
+        [TestMethod]
         public void CreateRelationsTest() {
             var eliminated = rel.FDs.Select(fd => rel.EliminateExtraneousAttributes(fd));
             rel.FDs = new HashSet<FunctionalDependency>(eliminated);
@@ -79,5 +98,6 @@ namespace RelationLibraryTest {
                 new Relation(Utilities.CreateSet(A, E, F), F.DependsOn(A, E))
                 )));
         }
+
     }
 }
