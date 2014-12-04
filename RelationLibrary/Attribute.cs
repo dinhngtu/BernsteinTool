@@ -16,6 +16,10 @@ namespace RelationLibrary {
             return new FunctionalDependency(new HashSet<Attribute>(determinants), this);
         }
 
+        public FunctionalDependency DependsOn(IEnumerable<Attribute> determinants) {
+            return new FunctionalDependency(new HashSet<Attribute>(determinants), this);
+        }
+
         public bool Equals(Attribute other) {
             return this.Name == other.Name;
         }

@@ -104,7 +104,7 @@ namespace BernsteinTool {
         private void buttonAddFD_Click(object sender, EventArgs e) {
             if (lhs.Count > 0 && rhs.Count > 0) {
                 foreach (var r in rhs) {
-                    fds.Add(new FunctionalDependency(new HashSet<Attribute>(lhs), r));
+                    fds.Add(r.DependsOn(lhs));
                 }
             }
             lhs.Clear();
