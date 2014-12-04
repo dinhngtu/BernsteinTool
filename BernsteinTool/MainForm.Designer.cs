@@ -29,13 +29,13 @@ namespace BernsteinTool {
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxAttributeName = new System.Windows.Forms.TextBox();
             this.buttonAddAttribute = new System.Windows.Forms.Button();
-            this.buttonRemoveAttribute = new System.Windows.Forms.Button();
+            this.buttonClearAttributes = new System.Windows.Forms.Button();
             this.listBoxAttributes = new System.Windows.Forms.ListBox();
             this.tabPageFunctionalDependencies = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.listBoxFDs = new System.Windows.Forms.ListBox();
             this.buttonAddFD = new System.Windows.Forms.Button();
-            this.buttonRemoveFD = new System.Windows.Forms.Button();
+            this.buttonClearFDs = new System.Windows.Forms.Button();
             this.listBoxAttributesForFDs = new System.Windows.Forms.ListBox();
             this.listBoxLHS = new System.Windows.Forms.ListBox();
             this.listBoxRHS = new System.Windows.Forms.ListBox();
@@ -83,7 +83,7 @@ namespace BernsteinTool {
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.textBoxAttributeName, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.buttonAddAttribute, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.buttonRemoveAttribute, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.buttonClearAttributes, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.listBoxAttributes, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
@@ -123,15 +123,15 @@ namespace BernsteinTool {
             this.buttonAddAttribute.UseVisualStyleBackColor = true;
             this.buttonAddAttribute.Click += new System.EventHandler(this.buttonAddAttribute_Click);
             // 
-            // buttonRemoveAttribute
+            // buttonClearAttributes
             // 
-            this.buttonRemoveAttribute.Location = new System.Drawing.Point(768, 16);
-            this.buttonRemoveAttribute.Name = "buttonRemoveAttribute";
-            this.buttonRemoveAttribute.Size = new System.Drawing.Size(75, 23);
-            this.buttonRemoveAttribute.TabIndex = 3;
-            this.buttonRemoveAttribute.Text = "button2";
-            this.buttonRemoveAttribute.UseVisualStyleBackColor = true;
-            this.buttonRemoveAttribute.Click += new System.EventHandler(this.buttonRemoveAttribute_Click);
+            this.buttonClearAttributes.Location = new System.Drawing.Point(768, 16);
+            this.buttonClearAttributes.Name = "buttonClearAttributes";
+            this.buttonClearAttributes.Size = new System.Drawing.Size(75, 23);
+            this.buttonClearAttributes.TabIndex = 3;
+            this.buttonClearAttributes.Text = "button2";
+            this.buttonClearAttributes.UseVisualStyleBackColor = true;
+            this.buttonClearAttributes.Click += new System.EventHandler(this.buttonClearAttributes_Click);
             // 
             // listBoxAttributes
             // 
@@ -145,6 +145,7 @@ namespace BernsteinTool {
             this.listBoxAttributes.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listBoxAttributes.Size = new System.Drawing.Size(840, 428);
             this.listBoxAttributes.TabIndex = 4;
+            this.listBoxAttributes.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxAttributes_MouseDoubleClick);
             // 
             // tabPageFunctionalDependencies
             // 
@@ -166,7 +167,7 @@ namespace BernsteinTool {
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.Controls.Add(this.listBoxFDs, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.buttonAddFD, 2, 2);
-            this.tableLayoutPanel2.Controls.Add(this.buttonRemoveFD, 3, 2);
+            this.tableLayoutPanel2.Controls.Add(this.buttonClearFDs, 3, 2);
             this.tableLayoutPanel2.Controls.Add(this.listBoxAttributesForFDs, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.listBoxLHS, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.listBoxRHS, 1, 1);
@@ -187,16 +188,16 @@ namespace BernsteinTool {
             this.listBoxFDs.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxFDs.FormattingEnabled = true;
             this.listBoxFDs.ItemHeight = 25;
-            this.listBoxFDs.Location = new System.Drawing.Point(682, 3);
+            this.listBoxFDs.Location = new System.Drawing.Point(680, 3);
             this.listBoxFDs.Name = "listBoxFDs";
             this.tableLayoutPanel2.SetRowSpan(this.listBoxFDs, 2);
             this.listBoxFDs.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxFDs.Size = new System.Drawing.Size(161, 440);
+            this.listBoxFDs.Size = new System.Drawing.Size(163, 440);
             this.listBoxFDs.TabIndex = 3;
             // 
             // buttonAddFD
             // 
-            this.buttonAddFD.Location = new System.Drawing.Point(682, 449);
+            this.buttonAddFD.Location = new System.Drawing.Point(680, 449);
             this.buttonAddFD.Name = "buttonAddFD";
             this.buttonAddFD.Size = new System.Drawing.Size(75, 23);
             this.buttonAddFD.TabIndex = 4;
@@ -204,15 +205,15 @@ namespace BernsteinTool {
             this.buttonAddFD.UseVisualStyleBackColor = true;
             this.buttonAddFD.Click += new System.EventHandler(this.buttonAddFD_Click);
             // 
-            // buttonRemoveFD
+            // buttonClearFDs
             // 
-            this.buttonRemoveFD.Location = new System.Drawing.Point(763, 449);
-            this.buttonRemoveFD.Name = "buttonRemoveFD";
-            this.buttonRemoveFD.Size = new System.Drawing.Size(75, 23);
-            this.buttonRemoveFD.TabIndex = 5;
-            this.buttonRemoveFD.Text = "button2";
-            this.buttonRemoveFD.UseVisualStyleBackColor = true;
-            this.buttonRemoveFD.Click += new System.EventHandler(this.buttonRemoveFD_Click);
+            this.buttonClearFDs.Location = new System.Drawing.Point(761, 449);
+            this.buttonClearFDs.Name = "buttonClearFDs";
+            this.buttonClearFDs.Size = new System.Drawing.Size(75, 23);
+            this.buttonClearFDs.TabIndex = 5;
+            this.buttonClearFDs.Text = "button2";
+            this.buttonClearFDs.UseVisualStyleBackColor = true;
+            this.buttonClearFDs.Click += new System.EventHandler(this.buttonClearFDs_Click);
             // 
             // listBoxAttributesForFDs
             // 
@@ -224,8 +225,9 @@ namespace BernsteinTool {
             this.listBoxAttributesForFDs.Location = new System.Drawing.Point(3, 3);
             this.listBoxAttributesForFDs.Name = "listBoxAttributesForFDs";
             this.listBoxAttributesForFDs.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxAttributesForFDs.Size = new System.Drawing.Size(673, 217);
+            this.listBoxAttributesForFDs.Size = new System.Drawing.Size(671, 217);
             this.listBoxAttributesForFDs.TabIndex = 6;
+            this.listBoxAttributesForFDs.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxAttributesForFDs_MouseDoubleClick);
             this.listBoxAttributesForFDs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxAttributesForFDs_MouseDown);
             // 
             // listBoxLHS
@@ -238,7 +240,7 @@ namespace BernsteinTool {
             this.listBoxLHS.Location = new System.Drawing.Point(3, 226);
             this.listBoxLHS.Name = "listBoxLHS";
             this.tableLayoutPanel2.SetRowSpan(this.listBoxLHS, 2);
-            this.listBoxLHS.Size = new System.Drawing.Size(333, 247);
+            this.listBoxLHS.Size = new System.Drawing.Size(332, 247);
             this.listBoxLHS.TabIndex = 7;
             this.listBoxLHS.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBoxLHS_DragDrop);
             this.listBoxLHS.DragOver += new System.Windows.Forms.DragEventHandler(this.listBoxLHS_DragOver);
@@ -251,10 +253,10 @@ namespace BernsteinTool {
             this.listBoxRHS.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxRHS.FormattingEnabled = true;
             this.listBoxRHS.ItemHeight = 25;
-            this.listBoxRHS.Location = new System.Drawing.Point(342, 226);
+            this.listBoxRHS.Location = new System.Drawing.Point(341, 226);
             this.listBoxRHS.Name = "listBoxRHS";
             this.tableLayoutPanel2.SetRowSpan(this.listBoxRHS, 2);
-            this.listBoxRHS.Size = new System.Drawing.Size(334, 247);
+            this.listBoxRHS.Size = new System.Drawing.Size(333, 247);
             this.listBoxRHS.TabIndex = 8;
             this.listBoxRHS.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBoxRHS_DragDrop);
             this.listBoxRHS.DragOver += new System.Windows.Forms.DragEventHandler(this.listBoxRHS_DragOver);
@@ -320,7 +322,7 @@ namespace BernsteinTool {
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxAttributeName;
         private System.Windows.Forms.Button buttonAddAttribute;
-        private System.Windows.Forms.Button buttonRemoveAttribute;
+        private System.Windows.Forms.Button buttonClearAttributes;
         private System.Windows.Forms.ListBox listBoxAttributes;
         private System.Windows.Forms.Button buttonNext;
         private System.Windows.Forms.Button buttonBack;
@@ -328,7 +330,7 @@ namespace BernsteinTool {
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.ListBox listBoxFDs;
         private System.Windows.Forms.Button buttonAddFD;
-        private System.Windows.Forms.Button buttonRemoveFD;
+        private System.Windows.Forms.Button buttonClearFDs;
         private System.Windows.Forms.ListBox listBoxAttributesForFDs;
         private System.Windows.Forms.ListBox listBoxLHS;
         private System.Windows.Forms.ListBox listBoxRHS;

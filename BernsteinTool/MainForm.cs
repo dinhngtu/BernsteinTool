@@ -47,17 +47,30 @@ namespace BernsteinTool {
             textBoxAttributeName.ResetText();
         }
 
-        private void buttonRemoveAttribute_Click(object sender, EventArgs e) {
+        private void buttonClearAttributes_Click(object sender, EventArgs e) {
             if (fds.Count > 0) {
                 MessageBox.Show("You can't remove attributes when you have FDs.");
                 return;
             }
-            // TODO
+            attributes.Clear();
+        }
+
+        private void listBoxAttributes_MouseDoubleClick(object sender, MouseEventArgs e) {
+            if (fds.Count > 0) {
+                MessageBox.Show("You can't remove attributes when you have FDs.");
+                return;
+            }
+            var index = listBoxAttributes.IndexFromPoint(e.Location);
+            if (index != ListBox.NoMatches) {
+                attributes.RemoveAt(index);
+            }
         }
 
         #endregion
 
         #region FDs
+
+        #region Drag & drop
 
         private void listBoxAttributesForFDs_MouseDown(object sender, MouseEventArgs e) {
             DoDragDrop(listBoxAttributesForFDs.SelectedItems, DragDropEffects.Copy);
@@ -87,6 +100,8 @@ namespace BernsteinTool {
             e.Effect = DragDropEffects.Copy;
         }
 
+        #endregion
+
         private void listBoxLHS_MouseDoubleClick(object sender, MouseEventArgs e) {
             var index = listBoxLHS.IndexFromPoint(e.Location);
             if (index != ListBox.NoMatches) {
@@ -111,8 +126,15 @@ namespace BernsteinTool {
             rhs.Clear();
         }
 
-        private void buttonRemoveFD_Click(object sender, EventArgs e) {
-            // TODO
+        private void buttonClearFDs_Click(object sender, EventArgs e) {
+            fds.Clear();
+        }
+
+        private void listBoxAttributesForFDs_MouseDoubleClick(object sender, MouseEventArgs e) {
+            var index = listBoxFDs.IndexFromPoint(e.Location);
+            if (index != ListBox.NoMatches) {
+                fds.RemoveAt(index);
+            }
         }
 
         #endregion
