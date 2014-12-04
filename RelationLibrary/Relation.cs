@@ -148,7 +148,7 @@ namespace RelationLibrary {
         }
 
         public override string ToString() {
-            return string.Format("{{ {0} }}", string.Join(", ", FDs.Select(fd => fd.ToString())));
+            return string.Format("{{ ({0}); {1} }}", string.Join("", Attributes), string.Join(", ", FDs.Select(fd => fd.ToString())));
         }
     }
 }
