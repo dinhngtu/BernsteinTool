@@ -43,8 +43,10 @@ namespace BernsteinTool {
         #region Attributes
 
         private void buttonAddAttribute_Click(object sender, EventArgs e) {
-            attributes.Add(new Attribute(textBoxAttributeName.Text));
-            textBoxAttributeName.ResetText();
+            if (!string.IsNullOrWhiteSpace(textBoxAttributeName.Text)) {
+                attributes.Add(new Attribute(textBoxAttributeName.Text));
+                textBoxAttributeName.ResetText();
+            }
         }
 
         private void buttonClearAttributes_Click(object sender, EventArgs e) {
