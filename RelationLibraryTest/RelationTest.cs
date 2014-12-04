@@ -111,7 +111,7 @@ namespace RelationLibraryTest {
         [TestMethod]
         public void CreateRelationsTest2() {
             using (ShimsContext.Create()) {
-                RelationLibrary.Fakes.ShimRelation.AllInstances.GetMinCandidateKeyHashSetOfAttributeHashSetOfAttribute =
+                RelationLibrary.Fakes.ShimRelation.AllInstances.GetMinimalCandidateKeyHashSetOfAttributeHashSetOfAttribute =
                     (x, y, z) => Utilities.CreateSet(A, E, F);
                 CreateRelationsTest();
             }
