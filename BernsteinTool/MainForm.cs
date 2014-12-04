@@ -132,7 +132,7 @@ namespace BernsteinTool {
             fds.Clear();
         }
 
-        private void listBoxAttributesForFDs_MouseDoubleClick(object sender, MouseEventArgs e) {
+        private void listBoxFDs_MouseDoubleClick(object sender, MouseEventArgs e) {
             var index = listBoxFDs.IndexFromPoint(e.Location);
             if (index != ListBox.NoMatches) {
                 fds.RemoveAt(index);
