@@ -121,6 +121,29 @@ namespace RelationLibrary {
             return Tuple.Create(true, Ki_prime);
         }
 
+        public static List<Tuple<Relation, HashSet<Attribute>>> DeletionNormalization(HashSet<Relation> relations) {
+            var ret = new List<Tuple<Relation, HashSet<Attribute>>>();
+            foreach (Relation r in relations) {
+                var key = new HashSet<Attribute>();
+                foreach (var det in r.FDs.Select(fd => fd.Determinants)) {
+                    key.UnionWith(det);
+                }
+                var candidate = Tuple.Create(r, key);
+                foreach (Attribute a in r.Attributes) {
+                    var test = IsAttributeSuperfluous(relations, r, a);
+                    if (test.Item1) {
+                        var k = new HashSet<Attribute>();
+                        foreach (var i in test.Item2) {
+                            k.UnionWith(i);
+                        }
+                        candidate = Tuple.Create(r.GetExcepted(a), k);
+                    }
+                }
+                ret.Add(candidate);
+            }
+            return ret;
+        }
+
         #endregion
     }
 }
