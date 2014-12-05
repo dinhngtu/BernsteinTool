@@ -41,13 +41,10 @@ namespace RelationLibrary {
         /// <param name="input"></param>
         /// <returns></returns>
         public static HashSet<Relation> AugmentRelations(Relation reference, HashSet<Relation> input) {
-            var key = reference.GetCandidateKey();
-            var crel = new Relation(key, reference.GetFDSubset(key));
             var ret = new HashSet<Relation>(input);
-            foreach (var rel in input) {
-                ret.Add(rel);
-            }
             if (!ret.Any(r => reference.IsSuperkey(r.Attributes))) {
+                var key = reference.GetCandidateKey();
+                var crel = new Relation(key, reference.GetFDSubset(key));
                 ret.Add(crel);
             }
             return ret;
