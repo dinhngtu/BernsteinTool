@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RelationLibrary {
     public static class LingTompaKameda {
+        // Here be dragons!
+        // READ THE PAPER! http://www.comp.nus.edu.sg/~lingtw/papers/tods81.LTK.pdf
+
         #region Preparatory algorithm
 
         /// <summary>
