@@ -68,7 +68,7 @@ namespace RelationLibrary {
             var none = new Tuple<bool, IEnumerable<HashSet<Attribute>>>(false, null);
 
             var Ki = new HashSet<HashSet<Attribute>>(target.FDs.Select(fd => fd.Determinants), HashSet<Attribute>.CreateSetComparer());
-            if (Ki.Single().SetEquals(target.Attributes)) {
+            if (Ki.Count == 1 && Ki.Single().SetEquals(target.Attributes)) {
                 return none;
             }
 
