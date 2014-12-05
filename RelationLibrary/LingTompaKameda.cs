@@ -57,7 +57,7 @@ namespace RelationLibrary {
         /// <summary>
         /// Step 2
         /// </summary>
-        public static Tuple<bool, IEnumerable<HashSet<Attribute>>> IsAttributeSuperfluous(HashSet<Relation> relations, Relation target, Attribute attr) {
+        public static Tuple<bool, HashSet<HashSet<Attribute>>> IsAttributeSuperfluous(HashSet<Relation> relations, Relation target, Attribute attr) {
             if (!target.Attributes.Contains(attr)) {
                 throw new ArgumentException("Attribute not in target");
             }
@@ -65,38 +65,60 @@ namespace RelationLibrary {
                 throw new ArgumentException("Target not in relation set");
             }
 
-            var none = new Tuple<bool, IEnumerable<HashSet<Attribute>>>(false, null);
+            var none = Tuple.Create<bool, HashSet<HashSet<Attribute>>>(false, null);
 
             var Ki = new HashSet<HashSet<Attribute>>(target.FDs.Select(fd => fd.Determinants), HashSet<Attribute>.CreateSetComparer());
             if (Ki.Count == 1 && Ki.Single().SetEquals(target.Attributes)) {
                 return none;
             }
 
-            var Ki_prime = target.FDs.Select(fd => fd.Determinants).Where(det => !det.Contains(attr));
+            var Ki_prime = new HashSet<HashSet<Attribute>>(target.FDs.Select(fd => fd.Determinants).Where(det => !det.Contains(attr)).ToList(), HashSet<Attribute>.CreateSetComparer());
             if (!Ki_prime.Any()) {
                 return none;
             }
 
+            var Gi = new HashSet<FunctionalDependency>();
+            foreach (var K in Ki) {
+                Gi.UnionWith(FunctionalDependency.Decompose(K, target.Attributes.GetExceptedMany(K)));
+            }
+            var Gi_R = new Relation(Relation.GetAttributeSet(Gi), Gi);
+
             var exceptAttr = target.FDs.Where(fd => !fd.HasAttribute(attr));
             var Gi_prime = new HashSet<FunctionalDependency>();
+            foreach (var G in relations.Where(r => r != target)) {
+                Gi_prime.UnionWith(G.FDs);
+            }
+            var Ai_prime = target.Attributes.GetExcepted(attr);
             foreach (var fd in exceptAttr) {
                 var K = fd.Determinants;
-                Gi_prime.UnionWith(FunctionalDependency.Decompose(K, target.Attributes.GetExceptedMany(K)));
+                Gi_prime.UnionWith(FunctionalDependency.Decompose(K, Ai_prime.GetExceptedMany(K)));
             }
             var Gi_primeR = new Relation(Relation.GetAttributeSet(Gi_prime), Gi_prime);
 
+            // check restorability
             foreach (var K in Ki_prime) {
                 if (!Gi_primeR.GetClosure(K).Contains(attr)) {
                     return none;
                 }
             }
 
+            // B is restorable, check non-essentiality
             foreach (var K in Ki.Except(Ki_prime)) {
                 var M = Gi_primeR.GetClosure(K);
-                // TODO
+                var M_test = new HashSet<Attribute>(M);
+                M_test.IntersectWith(target.Attributes);
+                M_test.Remove(attr);
+                // M_test = (M intersect Ai) - B
+                foreach (var x in target.Attributes) {
+                    if (!Gi_R.GetClosure(M_test).Contains(x)) {
+                        return none;
+                    }
+                }
+                // add key of Ri in M_test to Ki_prime
+                Ki_prime.Add(target.GetMinimalCandidateKey(M_test, M_test));
             }
 
-            return none;
+            return Tuple.Create(true, Ki_prime);
         }
 
         #endregion
