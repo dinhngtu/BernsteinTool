@@ -143,6 +143,16 @@ namespace BernsteinTool {
 
         #region Synthesis
 
+        public void PrintRelationWithKey(Tuple<Relation, HashSet<Attribute>> rk) {
+            Font oldFont = textBoxOutput.Font;
+            textBoxOutput.AppendText("(");
+            textBoxOutput.SelectionFont = new Font(oldFont, FontStyle.Underline);
+            textBoxOutput.AppendText(string.Join("", rk.Item2));
+            textBoxOutput.SelectionFont = oldFont;
+            textBoxOutput.AppendText(string.Join("", rk.Item1.Attributes.GetExceptedMany(rk.Item2)));
+            textBoxOutput.AppendText(string.Format("): {{ {0} }}\n", string.Join(", ", rk.Item1.FDs.Select(fd => fd.ToString()))));
+        }
+
         private void buttonRun_Click(object sender, EventArgs e) {
             textBoxOutput.ResetText();
 
@@ -178,7 +188,7 @@ namespace BernsteinTool {
             }
             textBoxOutput.AppendText("\n");
 
-            textBoxOutput.AppendText("Step 2.0. Display superfluous attributes\n");
+            textBoxOutput.AppendText("Step 1.9. Display superfluous attributes\n");
             textBoxOutput.AppendText("Output:\n");
             foreach (var r in rels14) {
                 textBoxOutput.AppendText(string.Format("Relation {0}:\n", r.ToString()));
@@ -186,6 +196,13 @@ namespace BernsteinTool {
                     textBoxOutput.AppendText(string.Format("{0}: {1}\n", a, LingTompaKameda.IsAttributeSuperfluous(rels14, r, a).Item1));
                 }
                 textBoxOutput.AppendText("\n");
+            }
+
+            textBoxOutput.AppendText("Step 2. Deletion normalization\n");
+            textBoxOutput.AppendText("Output:\n");
+            var rels2 = LingTompaKameda.DeletionNormalization(rels14);
+            foreach (var rk in rels2) {
+                PrintRelationWithKey(rk);
             }
         }
 
