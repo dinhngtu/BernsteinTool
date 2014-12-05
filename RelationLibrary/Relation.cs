@@ -10,9 +10,9 @@ namespace RelationLibrary {
 
         public HashSet<FunctionalDependency> FDs { get; set; }
 
-        public Relation(HashSet<Attribute> attributes, HashSet<FunctionalDependency> fds) {
+        public Relation(HashSet<Attribute> attributes, IEnumerable<FunctionalDependency> fds) {
             this.Attributes = attributes;
-            this.FDs = fds;
+            this.FDs = new HashSet<FunctionalDependency>(fds);
         }
 
         public Relation(HashSet<Attribute> attrs, params FunctionalDependency[] fds) {
@@ -132,6 +132,10 @@ namespace RelationLibrary {
                 }
             }
             return fds;
+        }
+
+        public Relation GetExcepted(params Attribute[] exclude) {
+            return new Relation(Attributes.GetExceptedMany(exclude), FDs.Where(fd => exclude.All(a => !fd.HasAttribute(a))));
         }
 
         [Obsolete]
