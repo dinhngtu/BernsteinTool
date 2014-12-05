@@ -152,20 +152,39 @@ namespace BernsteinTool {
             textBoxOutput.AppendText(string.Format("Original relation: {0}\n", rel.ToString()));
             textBoxOutput.AppendText("\n");
 
-            textBoxOutput.AppendText("Step 1. Eliminate extraneous attributes\n");
-            rel.FDs = new HashSet<FunctionalDependency>(rel.FDs.Select(fd => rel.GetMinimalFD(fd)));
+            textBoxOutput.AppendText("Step 1.0. Preparatory algorithm (modified Bernstein)\n");
+            textBoxOutput.AppendText("\n");
+
+            textBoxOutput.AppendText("Step 1.1. Eliminate extraneous attributes and dependencies\n");
+            var rel11 = LingTompaKameda.EliminateExtras(rel);
             textBoxOutput.AppendText(string.Format("Output: {0}\n", rel.ToString()));
             textBoxOutput.AppendText("\n");
 
-            textBoxOutput.AppendText("Step 2. Find minimal covering\n");
-            rel.FDs = rel.GetMinimalCovering();
-            textBoxOutput.AppendText(string.Format("Output: {0}\n", rel.ToString()));
-            textBoxOutput.AppendText("\n");
-
-            textBoxOutput.AppendText("Step 4. Construct 3NF relations\n");
+            textBoxOutput.AppendText("Step 1.2 and 1.3. Partition dependencies and construct relations\n");
+            var rels13 = LingTompaKameda.ConstructRelations(rel11);
             textBoxOutput.AppendText("Output:\n");
-            foreach (var r in rel.CreateRelations()) {
+            foreach (var r in rels13) {
                 textBoxOutput.AppendText(r.ToString());
+                textBoxOutput.AppendText("\n");
+            }
+            textBoxOutput.AppendText("\n");
+
+            textBoxOutput.AppendText("Step 1.4. Augment relation\n");
+            var rels14 = LingTompaKameda.AugmentRelations(rel, rels13);
+            textBoxOutput.AppendText("Output:\n");
+            foreach (var r in rels14) {
+                textBoxOutput.AppendText(r.ToString());
+                textBoxOutput.AppendText("\n");
+            }
+            textBoxOutput.AppendText("\n");
+
+            textBoxOutput.AppendText("Step 2.0. Display superfluous attributes\n");
+            textBoxOutput.AppendText("Output:\n");
+            foreach (var r in rels14) {
+                textBoxOutput.AppendText(string.Format("Relation {0}:\n", r.ToString()));
+                foreach (var a in r.Attributes) {
+                    textBoxOutput.AppendText(string.Format("{0}: {1}\n", a, LingTompaKameda.IsAttributeSuperfluous(rels14, r, a).Item1));
+                }
                 textBoxOutput.AppendText("\n");
             }
         }
