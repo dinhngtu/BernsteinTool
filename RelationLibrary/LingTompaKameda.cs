@@ -75,7 +75,7 @@ namespace RelationLibrary {
                 return none;
             }
 
-            var Ki_prime = new HashSet<HashSet<Attribute>>(target.FDs.Select(fd => fd.Determinants).Where(det => !det.Contains(attr)).ToList(), HashSet<Attribute>.CreateSetComparer());
+            var Ki_prime = new HashSet<HashSet<Attribute>>(target.FDs.Select(fd => fd.Determinants).Where(det => !det.Contains(attr)), HashSet<Attribute>.CreateSetComparer());
             if (!Ki_prime.Any()) {
                 return none;
             }
@@ -118,7 +118,14 @@ namespace RelationLibrary {
                     }
                 }
                 // add key of Ri in M_test to Ki_prime
-                Ki_prime.Add(target.GetMinimalCandidateKey(M_test, M_test));
+                // only consider attributes found in FDs, not "dangling" attributes
+                var attrCover = new HashSet<Attribute>();
+                foreach (var k in Ki_prime) {
+                    attrCover.UnionWith(k);
+                }
+                attrCover.IntersectWith(M_test);
+                //Ki_prime.Clear();
+                Ki_prime.Add(target.MinimizeAttributeSet(attrCover));
             }
 
             return Tuple.Create(true, Ki_prime);

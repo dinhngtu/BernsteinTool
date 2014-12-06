@@ -120,6 +120,17 @@ namespace RelationLibrary {
             return minCK;
         }
 
+        public HashSet<Attribute> MinimizeAttributeSet(HashSet<Attribute> input) {
+            var inputClosure = GetClosure(input);
+            foreach (var a in input) {
+                var testset = input.GetExcepted(a);
+                if (GetClosure(testset).SetEquals(inputClosure)) {
+                    return MinimizeAttributeSet(testset);
+                }
+            }
+            return input;
+        }
+
         public bool IsSuperkey(HashSet<Attribute> attrs) {
             return this.Attributes.SetEquals(GetClosure(attrs));
         }
