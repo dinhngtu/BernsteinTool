@@ -20,68 +20,49 @@ namespace RelationLibrary {
             this.FDs = new HashSet<FunctionalDependency>(fds);
         }
 
-        public HashSet<Attribute> GetClosure(HashSet<Attribute> determinants) {
-            var ret = new HashSet<Attribute>(determinants);
-            var testfds = new HashSet<FunctionalDependency>(FDs);
-            bool found;
-            do {
-                found = false;
-                var fdToRemove = new HashSet<FunctionalDependency>();
-                foreach (var fd in testfds) {
-                    if (fd.Determinants.IsSubsetOf(ret)) {
-                        found = true;
-                        ret.Add(fd.Dependent);
-                        fdToRemove.Add(fd);
-                        break;
-                    }
+        HashSet<Attribute> ClosureLoop(HashSet<FunctionalDependency> fds, HashSet<Attribute> attrs) {
+            foreach (var fd in fds) {
+                if (fd.Determinants.IsSubsetOf(attrs)) {
+                    var a_prime = new HashSet<Attribute>(attrs);
+                    a_prime.Add(fd.Dependent);
+                    return ClosureLoop(fds.GetExcepted(fd), a_prime);
                 }
-                testfds.ExceptWith(fdToRemove);
-            } while (found);
-            return ret;
+            }
+            return attrs;
+        }
+
+        public HashSet<Attribute> GetClosure(HashSet<Attribute> determinants) {
+            return ClosureLoop(this.FDs, determinants);
         }
 
         public FunctionalDependency GetMinimalFD(FunctionalDependency fd) {
-            if (fd.Determinants.Count == 1) {
+            var det = fd.Determinants;
+            if (det.Count == 1) {
                 return fd;
             }
-            var dets = new HashSet<Attribute>(fd.Determinants);
-            var refClosure = GetClosure(fd.Determinants);
-            bool found;
-            do {
-                found = false;
-                var attrToRemove = new HashSet<Attribute>();
-                foreach (var attr in dets) {
-                    var testdets = dets.GetExcepted(attr);
-                    if (refClosure.SetEquals(GetClosure(testdets))) {
-                        found = true;
-                        attrToRemove.Add(attr);
-                        break;
-                    }
+            var refClosure = GetClosure(det);
+            foreach (var attr in det) {
+                var testdets = det.GetExcepted(attr);
+                if (refClosure.SetEquals(GetClosure(testdets))) {
+                    return GetMinimalFD(fd.Dependent.DependsOn(testdets));
                 }
-                dets.ExceptWith(attrToRemove);
-            } while (found);
-            return new FunctionalDependency(dets, fd.Dependent);
+            }
+            return fd.Dependent.DependsOn(det);
+        }
+
+        HashSet<FunctionalDependency> MinimalCoveringLoop(HashSet<FunctionalDependency> fds) {
+            foreach (var fd in fds) {
+                var excluded = fds.GetExcepted(fd);
+                var closure = ClosureLoop(excluded, fd.Determinants);
+                if (closure.Contains(fd.Dependent)) {
+                    return MinimalCoveringLoop(excluded);
+                }
+            }
+            return fds;
         }
 
         public HashSet<FunctionalDependency> GetMinimalCovering() {
-            var testfds = new HashSet<FunctionalDependency>(FDs);
-            bool found;
-            do {
-                found = false;
-                var fdToRemove = new HashSet<FunctionalDependency>();
-                foreach (var fd in testfds) {
-                    var excluded = testfds.GetExcepted(fd);
-                    var relExcluded = new Relation(this.Attributes, excluded);
-                    var closure = relExcluded.GetClosure(fd.Determinants);
-                    if (closure.Contains(fd.Dependent)) {
-                        found = true;
-                        fdToRemove.Add(fd);
-                        break;
-                    }
-                }
-                testfds.ExceptWith(fdToRemove);
-            } while (found);
-            return testfds;
+            return MinimalCoveringLoop(this.FDs);
         }
 
         public static HashSet<Attribute> GetAttributeSet(IEnumerable<FunctionalDependency> fds) {
@@ -94,30 +75,8 @@ namespace RelationLibrary {
         }
 
         public HashSet<Attribute> GetCandidateKey() {
-            //throw new NotImplementedException();
             this.FDs = this.GetMinimalCovering();
-            return GetMinimalCandidateKey(this.Attributes, this.Attributes);
-            //var optimalKeys = new HashSet<Attribute>();
-            //var possibleKeys = new HashSet<Attribute>();
-            //var notKeys = new HashSet<Attribute>();
-
-        }
-
-        public HashSet<Attribute> GetMinimalCandidateKey(HashSet<Attribute> currentAttrs, HashSet<Attribute> minCK) {
-            var currentClosure = this.GetClosure(currentAttrs);
-            if (this.Attributes.SetEquals(currentClosure)
-                && currentAttrs.Count <= minCK.Count) minCK = currentAttrs;
-            else return minCK;
-            if (currentAttrs.Count == 1) return minCK;
-            foreach (var att in currentAttrs) {
-                var subset = new HashSet<Attribute>(currentAttrs);
-                subset.Remove(att);
-                var subsetMinCK = GetMinimalCandidateKey(subset, minCK);
-                if (minCK.Count > subsetMinCK.Count) {
-                    minCK = subsetMinCK;
-                }
-            }
-            return minCK;
+            return MinimizeAttributeSet(this.Attributes);
         }
 
         public HashSet<Attribute> MinimizeAttributeSet(HashSet<Attribute> input) {
