@@ -42,12 +42,12 @@ namespace RelationLibraryTest {
             Trace.WriteLine(step4.First());
 
             Trace.WriteLine("#LTK test");
-            Trace.WriteLine(LingTompaKameda.IsAttributeSuperfluous(step4, step4.First(), A).Item1);
-            Trace.WriteLine(LingTompaKameda.IsAttributeSuperfluous(step4, step4.First(), B).Item1);
-            Trace.WriteLine(LingTompaKameda.IsAttributeSuperfluous(step4, step4.First(), C).Item1);
-            Trace.WriteLine(LingTompaKameda.IsAttributeSuperfluous(step4, step4.First(), D).Item1);
-            Trace.WriteLine(LingTompaKameda.IsAttributeSuperfluous(step4, step4.First(), E).Item1);
-            Trace.WriteLine(LingTompaKameda.IsAttributeSuperfluous(step4, step4.First(), F).Item1);
+            Trace.WriteLine(LingTompaKameda.IsAttributeSuperfluous(rel, step4, step4.First(), A).Item1);
+            Trace.WriteLine(LingTompaKameda.IsAttributeSuperfluous(rel, step4, step4.First(), B).Item1);
+            Trace.WriteLine(LingTompaKameda.IsAttributeSuperfluous(rel, step4, step4.First(), C).Item1);
+            Trace.WriteLine(LingTompaKameda.IsAttributeSuperfluous(rel, step4, step4.First(), D).Item1);
+            Trace.WriteLine(LingTompaKameda.IsAttributeSuperfluous(rel, step4, step4.First(), E).Item1);
+            Trace.WriteLine(LingTompaKameda.IsAttributeSuperfluous(rel, step4, step4.First(), F).Item1);
         }
     }
 }

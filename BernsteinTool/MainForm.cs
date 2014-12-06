@@ -194,7 +194,7 @@ namespace BernsteinTool {
                 textBoxOutput.AppendText(string.Format("Relation {0}:\n", r.ToString()));
                 textBoxOutput.AppendText("Extraneous attributes: ");
                 foreach (var a in r.Attributes) {
-                    if (LingTompaKameda.IsAttributeSuperfluous(rels14, r, a).Item1) {
+                    if (LingTompaKameda.IsAttributeSuperfluous(rel, rels14, r, a).Item1) {
                         textBoxOutput.AppendText(a.ToString());
                     }
                 }
@@ -204,7 +204,7 @@ namespace BernsteinTool {
 
             textBoxOutput.AppendText("Step 2. Deletion normalization\n");
             textBoxOutput.AppendText("Output:\n");
-            var rels2 = LingTompaKameda.DeletionNormalization(rels14);
+            var rels2 = LingTompaKameda.DeletionNormalization(rel, rels14);
             foreach (var rk in rels2) {
                 PrintRelationWithKey(rk);
             }

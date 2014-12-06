@@ -60,7 +60,7 @@ namespace RelationLibrary {
         /// <summary>
         /// Step 2
         /// </summary>
-        public static Tuple<bool, HashSet<HashSet<Attribute>>> IsAttributeSuperfluous(HashSet<Relation> relations, Relation target, Attribute attr) {
+        public static Tuple<bool, HashSet<HashSet<Attribute>>> IsAttributeSuperfluous(Relation reference, HashSet<Relation> relations, Relation target, Attribute attr) {
             if (!target.Attributes.Contains(attr)) {
                 throw new ArgumentException("Attribute not in target");
             }
@@ -75,7 +75,7 @@ namespace RelationLibrary {
                 return none;
             }
 
-            var Ki_prime = new HashSet<HashSet<Attribute>>(target.FDs.Select(fd => fd.Determinants).Where(det => !det.Contains(attr)), HashSet<Attribute>.CreateSetComparer());
+            var Ki_prime = new HashSet<HashSet<Attribute>>(Ki.Where(x => !x.Contains(attr)), HashSet<Attribute>.CreateSetComparer());
             if (!Ki_prime.Any()) {
                 return none;
             }
@@ -86,11 +86,11 @@ namespace RelationLibrary {
             }
             var Gi_R = new Relation(Relation.GetAttributeSet(Gi), Gi);
 
-            var exceptAttr = target.FDs.Where(fd => !fd.HasAttribute(attr));
             var Gi_prime = new HashSet<FunctionalDependency>();
             foreach (var G in relations.Where(r => r != target)) {
                 Gi_prime.UnionWith(G.FDs);
             }
+            var exceptAttr = target.FDs.Where(fd => !fd.Determinants.Contains(attr));
             var Ai_prime = target.Attributes.GetExcepted(attr);
             foreach (var fd in exceptAttr) {
                 var K = fd.Determinants;
@@ -108,15 +108,18 @@ namespace RelationLibrary {
             // B is restorable, check non-essentiality
             foreach (var K in Ki.Except(Ki_prime)) {
                 var M = Gi_primeR.GetClosure(K);
+                if (target.Attributes.SetEquals(M)) {
+                    return Tuple.Create(true, Ki_prime);
+                }
+
                 var M_test = new HashSet<Attribute>(M);
                 M_test.IntersectWith(target.Attributes);
                 M_test.Remove(attr);
                 // M_test = (M intersect Ai) - B
-                foreach (var x in target.Attributes) {
-                    if (!Gi_R.GetClosure(M_test).Contains(x)) {
-                        return none;
-                    }
+                if (!reference.GetClosure(M_test).IsSupersetOf(target.Attributes)) {
+                    return none;
                 }
+
                 // add key of Ri in M_test to Ki_prime
                 // only consider attributes found in FDs, not "dangling" attributes
                 var attrCover = new HashSet<Attribute>();
@@ -131,7 +134,7 @@ namespace RelationLibrary {
             return Tuple.Create(true, Ki_prime);
         }
 
-        public static List<Tuple<Relation, HashSet<Attribute>>> DeletionNormalization(HashSet<Relation> relations) {
+        public static List<Tuple<Relation, HashSet<Attribute>>> DeletionNormalization(Relation reference, HashSet<Relation> relations) {
             var ret = new List<Tuple<Relation, HashSet<Attribute>>>();
             foreach (Relation r in relations) {
                 var key = new HashSet<Attribute>();
@@ -140,7 +143,7 @@ namespace RelationLibrary {
                 }
                 var candidate = Tuple.Create(r, key);
                 foreach (Attribute a in r.Attributes) {
-                    var test = IsAttributeSuperfluous(relations, r, a);
+                    var test = IsAttributeSuperfluous(reference, relations, r, a);
                     if (test.Item1) {
                         var k = new HashSet<Attribute>();
                         foreach (var i in test.Item2) {
