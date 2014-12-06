@@ -150,7 +150,7 @@ namespace BernsteinTool {
             textBoxOutput.AppendText(string.Join("", rk.Item2));
             textBoxOutput.SelectionFont = oldFont;
             textBoxOutput.AppendText(string.Join("", rk.Item1.Attributes.GetExceptedMany(rk.Item2)));
-            textBoxOutput.AppendText(string.Format("): {{ {0} }}\n", string.Join(", ", rk.Item1.FDs.Select(fd => fd.ToString()))));
+            textBoxOutput.AppendText(")\n");
         }
 
         private void buttonRun_Click(object sender, EventArgs e) {
