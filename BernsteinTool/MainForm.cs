@@ -192,8 +192,11 @@ namespace BernsteinTool {
             textBoxOutput.AppendText("Output:\n");
             foreach (var r in rels14) {
                 textBoxOutput.AppendText(string.Format("Relation {0}:\n", r.ToString()));
+                textBoxOutput.AppendText("Extraneous attributes: ");
                 foreach (var a in r.Attributes) {
-                    textBoxOutput.AppendText(string.Format("{0}: {1}\n", a, LingTompaKameda.IsAttributeSuperfluous(rels14, r, a).Item1));
+                    if (LingTompaKameda.IsAttributeSuperfluous(rels14, r, a).Item1) {
+                        textBoxOutput.AppendText(a.ToString());
+                    }
                 }
                 textBoxOutput.AppendText("\n");
             }
