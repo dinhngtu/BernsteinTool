@@ -162,7 +162,7 @@ namespace BernsteinTool {
             textBoxOutput.AppendText(string.Format("Original relation: {0}\n", rel.ToString()));
             textBoxOutput.AppendText("\n");
 
-            textBoxOutput.AppendText("Step 1.0. Preparatory algorithm (modified Bernstein)\n");
+            textBoxOutput.AppendText("Step 1. Preparatory algorithm (modified Bernstein)\n");
             textBoxOutput.AppendText("\n");
 
             textBoxOutput.AppendText("Step 1.1. Eliminate extraneous attributes and dependencies\n");
@@ -188,7 +188,7 @@ namespace BernsteinTool {
             }
             textBoxOutput.AppendText("\n");
 
-            textBoxOutput.AppendText("Step 1.9. Display superfluous attributes\n");
+            textBoxOutput.AppendText("Displaying superfluous attributes\n");
             textBoxOutput.AppendText("Output:\n");
             foreach (var r in rels14) {
                 textBoxOutput.AppendText(string.Format("Relation {0}:\n", r.ToString()));
@@ -200,6 +200,7 @@ namespace BernsteinTool {
                 }
                 textBoxOutput.AppendText("\n");
             }
+            textBoxOutput.AppendText("\n");
 
             textBoxOutput.AppendText("Step 2. Deletion normalization\n");
             textBoxOutput.AppendText("Output:\n");
