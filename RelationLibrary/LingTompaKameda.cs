@@ -149,7 +149,7 @@ namespace RelationLibrary {
                         foreach (var i in test.Item2) {
                             k.UnionWith(i);
                         }
-                        candidate = Tuple.Create(r.GetExcepted(a), k);
+                        candidate = Tuple.Create(r.GetExcepted(a), r.MinimizeAttributeSet(k));
                     }
                 }
                 ret.Add(candidate);
