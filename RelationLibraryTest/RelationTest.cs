@@ -87,36 +87,5 @@ namespace RelationLibraryTest {
             var realCK = Utilities.CreateSet(A, E);
             Assert.IsTrue(realCK.SetEquals(rel.GetCandidateKey()));
         }
-
-        [TestMethod]
-        public void CreateRelationsTest() {
-            var eliminated = rel.FDs.Select(fd => rel.GetMinimalFD(fd));
-            rel.FDs = new HashSet<FunctionalDependency>(eliminated);
-            rel.FDs = rel.GetMinimalCovering();
-#pragma warning disable 0612
-            var finalResult = rel.CreateRelations();
-#pragma warning restore 0612
-            Trace.WriteLine(finalResult.Count);
-            foreach (var r in finalResult) {
-                Trace.WriteLine(r);
-            }
-            var comp = HashSet<Attribute>.CreateSetComparer();
-            var actual = new HashSet<HashSet<Attribute>>(finalResult.Select(x => x.Attributes), comp);
-            var expected = Utilities.CreateSet(
-                Utilities.CreateSet(A, B),
-                Utilities.CreateSet(B, D, C),
-                Utilities.CreateSet(A, E, F)
-                );
-            Assert.IsTrue(actual.SetEquals(expected));
-        }
-
-        [TestMethod]
-        public void CreateRelationsTest2() {
-            using (ShimsContext.Create()) {
-                RelationLibrary.Fakes.ShimRelation.AllInstances.GetMinimalCandidateKeyHashSetOfAttributeHashSetOfAttribute =
-                    (x, y, z) => Utilities.CreateSet(A, E, F);
-                CreateRelationsTest();
-            }
-        }
     }
 }

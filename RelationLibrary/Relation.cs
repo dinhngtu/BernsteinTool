@@ -108,32 +108,6 @@ namespace RelationLibrary {
             return new Relation(Attributes.GetExceptedMany(exclude), FDs.Where(fd => exclude.All(a => !fd.HasAttribute(a))));
         }
 
-        [Obsolete]
-        public HashSet<Relation> CreateRelations() {
-            var relations = new HashSet<Relation>();
-            var keygroups = FDs.GroupBy(fd => fd.Determinants, HashSet<Attribute>.CreateSetComparer());
-            foreach (var group in keygroups) {
-                relations.Add(new Relation(GetAttributeSet(group), new HashSet<FunctionalDependency>(group)));
-            }
-            var key = this.GetCandidateKey();
-            var crel = new Relation(key, GetFDSubset(key));
-            var dedup = new HashSet<Relation>();
-            var addCrel = true;
-            foreach (var rel in relations) {
-                if (!rel.Attributes.IsSubsetOf(crel.Attributes) &&
-                    !relations.Any(r => r != rel && r.Attributes.IsSupersetOf(rel.Attributes))) {
-                    if (crel.Attributes.IsProperSubsetOf(rel.Attributes)) {
-                        addCrel = false;
-                    }
-                    dedup.Add(rel);
-                }
-            }
-            if (addCrel && !dedup.Any(r => IsSuperkey(r.Attributes))) {
-                dedup.Add(crel);
-            }
-            return dedup;
-        }
-
         public override string ToString() {
             return string.Format("({0}): {{ {1} }}", string.Join("", Attributes), string.Join(", ", FDs.Select(fd => fd.ToString())));
         }
