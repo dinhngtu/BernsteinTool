@@ -167,7 +167,7 @@ namespace BernsteinTool {
 
             textBoxOutput.AppendText("Step 1.1. Eliminate extraneous attributes and dependencies\n");
             var rel11 = LingTompaKameda.EliminateExtras(rel);
-            textBoxOutput.AppendText(string.Format("Output: {0}\n", rel.ToString()));
+            textBoxOutput.AppendText(string.Format("Output: {0}\n", rel11.ToString()));
             textBoxOutput.AppendText("\n");
 
             textBoxOutput.AppendText("Step 1.2 and 1.3. Partition dependencies and construct relations\n");
