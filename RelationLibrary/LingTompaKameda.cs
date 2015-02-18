@@ -136,23 +136,27 @@ namespace RelationLibrary {
 
         public static List<Tuple<Relation, HashSet<Attribute>>> DeletionNormalization(Relation reference, HashSet<Relation> relations) {
             var ret = new List<Tuple<Relation, HashSet<Attribute>>>();
+            var workingSet = new HashSet<Relation>(relations);
             foreach (Relation r in relations) {
+                var others = workingSet.GetExcepted(r);
                 var key = new HashSet<Attribute>();
                 foreach (var det in r.FDs.Select(fd => fd.Determinants)) {
                     key.UnionWith(det);
                 }
                 var candidate = Tuple.Create(r, key);
                 foreach (Attribute a in r.Attributes) {
-                    var test = IsAttributeSuperfluous(reference, relations, r, a);
+                    var test = IsAttributeSuperfluous(reference, others.GetUnioned(candidate.Item1), candidate.Item1, a);
                     if (test.Item1) {
                         var k = new HashSet<Attribute>();
                         foreach (var i in test.Item2) {
                             k.UnionWith(i);
                         }
-                        candidate = Tuple.Create(r.GetExcepted(a), r.MinimizeAttributeSet(k));
+                        candidate = Tuple.Create(candidate.Item1.GetExcepted(a), candidate.Item1.MinimizeAttributeSet(k));
                     }
                 }
                 ret.Add(candidate);
+                others.Add(candidate.Item1);
+                workingSet = others;
             }
             return ret;
         }

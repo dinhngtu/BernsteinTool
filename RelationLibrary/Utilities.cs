@@ -18,6 +18,12 @@ namespace RelationLibrary {
             return ret;
         }
 
+        public static HashSet<T> GetUnioned<T>(this HashSet<T> set, T value) {
+            HashSet<T> ret = new HashSet<T>(set);
+            ret.Add(value);
+            return ret;
+        }
+
         public static HashSet<T> CreateSet<T>(params T[] items) {
             return new HashSet<T>(items);
         }
