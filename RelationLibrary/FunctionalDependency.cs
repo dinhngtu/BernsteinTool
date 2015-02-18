@@ -59,7 +59,7 @@ namespace RelationLibrary {
         }
 
         public override string ToString() {
-            return string.Format("{0}->{1}", string.Join("", Determinants.Select(attr => attr.ToString())), Dependent.ToString());
+            return string.Format("{0}->{1}", string.Join(",", Determinants.Select(attr => attr.ToString())), Dependent.ToString());
         }
     }
 }

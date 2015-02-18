@@ -116,6 +116,7 @@ namespace BernsteinTool {
             this.textBoxAttributeName.Name = "textBoxAttributeName";
             this.textBoxAttributeName.Size = new System.Drawing.Size(678, 20);
             this.textBoxAttributeName.TabIndex = 1;
+            this.textBoxAttributeName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxAttributeName_KeyDown);
             // 
             // buttonAddAttribute
             // 
@@ -195,17 +196,17 @@ namespace BernsteinTool {
             this.listBoxFDs.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxFDs.FormattingEnabled = true;
             this.listBoxFDs.ItemHeight = 25;
-            this.listBoxFDs.Location = new System.Drawing.Point(685, 3);
+            this.listBoxFDs.Location = new System.Drawing.Point(684, 3);
             this.listBoxFDs.Name = "listBoxFDs";
             this.tableLayoutPanel2.SetRowSpan(this.listBoxFDs, 2);
             this.listBoxFDs.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxFDs.Size = new System.Drawing.Size(158, 470);
+            this.listBoxFDs.Size = new System.Drawing.Size(159, 470);
             this.listBoxFDs.TabIndex = 10;
             this.listBoxFDs.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxFDs_MouseDoubleClick);
             // 
             // buttonAddFD
             // 
-            this.buttonAddFD.Location = new System.Drawing.Point(685, 479);
+            this.buttonAddFD.Location = new System.Drawing.Point(684, 479);
             this.buttonAddFD.Name = "buttonAddFD";
             this.buttonAddFD.Size = new System.Drawing.Size(75, 23);
             this.buttonAddFD.TabIndex = 4;
@@ -215,7 +216,7 @@ namespace BernsteinTool {
             // 
             // buttonClearFDs
             // 
-            this.buttonClearFDs.Location = new System.Drawing.Point(766, 479);
+            this.buttonClearFDs.Location = new System.Drawing.Point(765, 479);
             this.buttonClearFDs.Name = "buttonClearFDs";
             this.buttonClearFDs.Size = new System.Drawing.Size(75, 23);
             this.buttonClearFDs.TabIndex = 5;
@@ -233,7 +234,7 @@ namespace BernsteinTool {
             this.listBoxAttributesForFDs.Location = new System.Drawing.Point(3, 3);
             this.listBoxAttributesForFDs.Name = "listBoxAttributesForFDs";
             this.listBoxAttributesForFDs.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxAttributesForFDs.Size = new System.Drawing.Size(676, 232);
+            this.listBoxAttributesForFDs.Size = new System.Drawing.Size(675, 232);
             this.listBoxAttributesForFDs.TabIndex = 6;
             this.listBoxAttributesForFDs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxAttributesForFDs_MouseDown);
             // 
@@ -263,7 +264,7 @@ namespace BernsteinTool {
             this.listBoxRHS.Location = new System.Drawing.Point(358, 241);
             this.listBoxRHS.Name = "listBoxRHS";
             this.tableLayoutPanel2.SetRowSpan(this.listBoxRHS, 2);
-            this.listBoxRHS.Size = new System.Drawing.Size(321, 261);
+            this.listBoxRHS.Size = new System.Drawing.Size(320, 261);
             this.listBoxRHS.TabIndex = 8;
             this.listBoxRHS.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBoxRHS_DragDrop);
             this.listBoxRHS.DragOver += new System.Windows.Forms.DragEventHandler(this.listBoxRHS_DragOver);

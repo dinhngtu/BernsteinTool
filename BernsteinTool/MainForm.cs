@@ -68,6 +68,13 @@ namespace BernsteinTool {
             }
         }
 
+        private void textBoxAttributeName_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                buttonAddAttribute.PerformClick();
+                e.Handled = true;
+            }
+        }
+
         #endregion
 
         #region FDs
@@ -147,9 +154,10 @@ namespace BernsteinTool {
             Font oldFont = textBoxOutput.Font;
             textBoxOutput.AppendText("(");
             textBoxOutput.SelectionFont = new Font(oldFont, FontStyle.Underline);
-            textBoxOutput.AppendText(string.Join("", rk.Item2));
+            textBoxOutput.AppendText(string.Join(",", rk.Item2));
             textBoxOutput.SelectionFont = oldFont;
-            textBoxOutput.AppendText(string.Join("", rk.Item1.Attributes.GetExceptedMany(rk.Item2)));
+            textBoxOutput.AppendText(",");
+            textBoxOutput.AppendText(string.Join(",", rk.Item1.Attributes.GetExceptedMany(rk.Item2)));
             textBoxOutput.AppendText(")\n");
         }
 
