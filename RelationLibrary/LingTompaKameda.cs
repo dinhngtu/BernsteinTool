@@ -61,14 +61,14 @@ namespace RelationLibrary {
         /// Step 2
         /// </summary>
         public static Tuple<bool, HashSet<HashSet<Attribute>>> IsAttributeSuperfluous(Relation reference, HashSet<Relation> relations, Relation target, Attribute attr) {
+            var none = Tuple.Create<bool, HashSet<HashSet<Attribute>>>(false, null);
+
             if (!target.Attributes.Contains(attr)) {
-                throw new ArgumentException("Attribute not in target");
+                throw new ArgumentException("target relation does not contain requested attribute");
             }
             if (!relations.Contains(target)) {
-                throw new ArgumentException("Target not in relation set");
+                throw new ArgumentException("relation set does not contain target relation");
             }
-
-            var none = Tuple.Create<bool, HashSet<HashSet<Attribute>>>(false, null);
 
             var Ki = new HashSet<HashSet<Attribute>>(target.FDs.Select(fd => fd.Determinants), HashSet<Attribute>.CreateSetComparer());
             if (Ki.Count == 1 && Ki.Single().SetEquals(target.Attributes)) {
