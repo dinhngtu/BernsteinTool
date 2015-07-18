@@ -17,9 +17,7 @@ namespace RelationLibrary {
         }
 
         public static IEnumerable<FunctionalDependency> Decompose(HashSet<Attribute> determinants, HashSet<Attribute> dependents) {
-            foreach (var dependent in dependents) {
-                yield return new FunctionalDependency(determinants, dependent);
-            }
+            return dependents.Select(dep => new FunctionalDependency(determinants, dep));
         }
 
         public bool HasAttribute(Attribute attr) {

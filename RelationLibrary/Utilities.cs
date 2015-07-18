@@ -30,16 +30,15 @@ namespace RelationLibrary {
 
         public static bool OnlyOne(params bool[] values) {
             bool one = false;
-            bool two = false;
             foreach (var v in values) {
                 if (v) {
                     if (one) {
-                        two = true;
+                        return false;
                     }
                     one = true;
                 }
             }
-            return (one && !two);
+            return one;
         }
     }
 }
